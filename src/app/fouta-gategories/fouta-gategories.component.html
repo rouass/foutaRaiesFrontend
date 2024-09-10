@@ -1,0 +1,39 @@
+<div class="title-section">
+  <h2>BY FOUTAS' Collections</h2>
+</div>
+
+<div *ngIf="isSmallScreen; else gridTemplate">
+  <div class="card">
+    <p-carousel [value]="products" [numVisible]="3" [numScroll]="2" [responsiveOptions]="responsiveOptions">
+      <ng-template let-product pTemplate="item">
+        <div class="product-item">
+          <div class="product-item-content">
+            <div class="mb-3">
+              <img [src]="product.image" [alt]="product.name" class="product-image" />
+            </div>
+            <div>
+              <h4 class="mb-1 productName">{{ product.name }}</h4>
+              <button class="see-collection-btn btnn" (click)="goToCategoryDetails(product.name)">See Collection</button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</div>
+
+<ng-template #gridTemplate>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products">
+        <div class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image" />
+          <div class="product-overlay">
+            <h2 class="product-title">{{ product.name }}</h2>
+            <button class="see-collection-btn" (click)="goToCategoryDetails(product.name)">See the Collection</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

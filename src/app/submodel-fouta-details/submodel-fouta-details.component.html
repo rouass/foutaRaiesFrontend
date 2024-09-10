@@ -1,0 +1,89 @@
+<div class="shop-container">
+  <div class="popup" *ngIf="showPopup">
+    Product added to devis! <button (click)="finalizeDevis()">Finalize Devis</button>
+  </div>
+
+
+  <h1 class="shop-title">Submodels</h1>
+  <p class="shop-description">Explore the various submodels available in this subcategory.</p>
+
+  <div class="tabs">
+    <button
+      class="tab-button"
+      *ngFor="let fouta of uniqueFoutas"
+      [class.active]="selectedFouta?.name === fouta.name"
+      (click)="selectFouta(fouta)"
+    >
+      {{ fouta.name }}
+    </button>
+  </div>
+
+  <div class="product-grid">
+    <div
+      class="product-card"
+      *ngFor="let submodel of submodels"
+      (click)="viewSubmodelDetails(submodel._id)"
+    >
+      <img class="product-image" [src]="submodel.image" alt="{{ submodel.name }}" />
+      <h3 class="product-name">{{ submodel.name }}</h3>
+      <p class="product-description">{{ submodel.description }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+</div>
+
+<!-- Fouta Details Section -->
+<div class="product-page" *ngIf="selectedFouta">
+  <div class="c">
+    <div class="image-gallery">
+      <div
+        class="thumbnail"
+        *ngFor="let image of selectedFoutaImages; let i = index"
+        (click)="selectImage(i)"
+        [class.selected]="i === selectedIndex"
+      >
+        <img [src]="image" alt="Thumbnail" />
+      </div>
+    </div>
+
+    <div class="main-image">
+      <img [src]="selectedFoutaImages[selectedIndex]" alt="Main product image" />
+    </div>
+  </div>
+
+  <div class="product-details">
+    <h1 class="product-title">{{ selectedFouta?.title }}</h1>
+
+    <button class="add-to-cart" (click)="addToDevis()">Ajouter au devis</button>
+    <div class="accordion">
+      <div class="accordion-item">
+        <button (click)="toggleDescription()">DESCRIZIONE</button>
+        <div *ngIf="showDescription">{{ selectedFouta?.description }}</div>
+      </div>
+      <div class="accordion-item">
+        <button (click)="toggleMaterials()">MATERIALI</button>
+        <div *ngIf="showMaterials">Materials content...</div>
+      </div>
+      <div class="accordion-item">
+        <button (click)="toggleShipping()">SPEDIZIONE</button>
+        <div *ngIf="showShipping">Shipping content...</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Similar Foutas Section -->
+<div class="similar-products" *ngIf="similarFoutas.length > 0">
+  <h2>Similar Foutas</h2>
+  <div class="product-grid">
+    <div
+      class="product-card"
+      *ngFor="let fouta of similarFoutas"
+      (click)="selectFouta(fouta)"
+    >
+      <img class="product-image" [src]="fouta.images[0]" alt="{{ fouta.name }}" />
+      <h3 class="product-name">{{ fouta.name }}</h3>
+      <p class="product-description">{{ fouta.description }}</p>
+    </div>
+  </div>
+</div>

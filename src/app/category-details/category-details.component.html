@@ -1,0 +1,30 @@
+<div class="shop-container">
+  <h1 class="shop-title">{{ categoryDetails?.name }}</h1>
+  <p class="shop-description">{{ categoryDetails?.description }}</p>
+
+  <div class="tabs">
+    <button class="tab-button active">TUTTI I PRODOTTI</button>
+    <button class="tab-button">SALDI</button>
+  </div>
+
+  <h2>Subcategories for {{ categoryName }}</h2>
+
+  <div class="product-grid">
+        <div
+        class="product-card"
+        *ngFor="let subcategory of subcategories"
+        (click)="onSubcategoryClick(subcategory.name)"
+        >
+          <img class="product-image" [src]="subcategory.image" alt="{{ subcategory.name }}" />
+          <h3>{{ subcategory.name }}</h3>
+          <p>{{ subcategory.description }}</p>
+      </div>
+   </div>
+
+
+  <div *ngIf="isLoading" class="loading-spinner">
+  </div>
+</div>
+
+
+

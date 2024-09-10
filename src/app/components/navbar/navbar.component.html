@@ -1,0 +1,35 @@
+<div class="top-info">
+  <span class="email-address">contact@byfoutas.com</span>
+  <span class="phone-number">+39 123 456 7890</span>
+</div>
+
+<nav class="navbar">
+
+  <button class="menu-toggle" (click)="toggleMenu()">
+    <i [ngClass]="isMenuOpen ? 'pi pi-times' : 'pi pi-align-justify'"></i>
+  </button>
+  <div class="navbar-center" [ngClass]="{'active': isMenuOpen}">
+    <img src="../../../assets/logo1-removebg-preview.png" alt="Logo" />
+  </div>
+  <div class="menu-items" [ngClass]="{'active': isMenuOpen}">
+    <div class="navbar-left">
+      <a *ngFor="let category of categories"
+         (mouseenter)="showSubcategories(category._id)"
+         (mouseleave)="hideSubcategories()">
+        {{ category.name }}
+
+        <div class="subcategories" *ngIf="activeCategory === category._id">
+          <a *ngFor="let subcategory of category.subcategories">
+            {{ subcategory.name }}
+          </a>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="navbar-right">
+      <a class="icon-link"><i class="pi pi-facebook" style="font-size: 1rem"></i></a>
+      <a class="icon-link"><i class="pi pi-instagram" style="font-size: 1rem"></i></a>
+    </div>
+  </div>
+</nav>

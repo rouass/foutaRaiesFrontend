@@ -1,0 +1,55 @@
+<form (ngSubmit)="submitDevis()" *ngIf="devisService.devisItems.length > 0" class="devis-form">
+  <div class="form-container">
+    <div class="user-info">
+      <h2>Personal Information</h2>
+
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" type="text" [(ngModel)]="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="prenom">Prenom:</label>
+        <input id="prenom" type="text" [(ngModel)]="prenom" name="prenom" required>
+      </div>
+
+      <div class="form-group">
+        <label for="numtel">Phone Number:</label>
+        <input id="numtel" type="text" [(ngModel)]="numtel" name="numtel" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" type="email" [(ngModel)]="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="comments">Comments:</label>
+        <textarea id="comments" [(ngModel)]="comments" name="comments"></textarea>
+      </div>
+    </div>
+
+    <div class="fouta-selection-container">
+      <h2>Your Selected Foutas</h2>
+
+      <div class="fouta-list">
+        <div class="fouta-item" *ngFor="let item of devisService.devisItems; let i = index">
+          <img [src]="item.image" alt="{{ item.name }}" class="fouta-image">
+          <div class="fouta-details">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <div class="form-group">
+              <label for="quantity{{i}}">Quantity:</label>
+              <input id="quantity{{i}}" type="number" [(ngModel)]="item.quantity" name="quantity{{i}}" min="1" required>
+            </div>
+            <div class="form-group">
+              <label for="itemComments{{i}}">Comments:</label>
+              <textarea id="itemComments{{i}}" [(ngModel)]="item.comments" name="itemComments{{i}}"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn-submit">Submit Devis</button>
+</form>
