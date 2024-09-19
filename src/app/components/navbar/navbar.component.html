@@ -1,35 +1,42 @@
 <div class="top-info">
-  <span class="email-address">contact@byfoutas.com</span>
-  <span class="phone-number">+39 123 456 7890</span>
+  <span class="email-address">fouta.raies@gmail.com</span>
+  <span class="phone-number">+216 99 521 058 / +216 52466593</span>
 </div>
 
-<nav class="navbar">
-
+<nav class="navbar" [ngClass]="{'scrolled': isScrolled}">
+  <div class="navbar-center">
+    <a (click)="navigateHome()">
+      <img src="../../../assets/logoFouta-removebg-preview (1).png" alt="Logo" />
+    </a>
+  </div>
   <button class="menu-toggle" (click)="toggleMenu()">
     <i [ngClass]="isMenuOpen ? 'pi pi-times' : 'pi pi-align-justify'"></i>
   </button>
-  <div class="navbar-center" [ngClass]="{'active': isMenuOpen}">
-    <img src="../../../assets/logo1-removebg-preview.png" alt="Logo" />
-  </div>
+
   <div class="menu-items" [ngClass]="{'active': isMenuOpen}">
     <div class="navbar-left">
-      <a *ngFor="let category of categories"
-         (mouseenter)="showSubcategories(category._id)"
-         (mouseleave)="hideSubcategories()">
-        {{ category.name }}
+      <div *ngFor="let category of categories"
+           class="category-wrapper"
+           (mouseenter)="showSubcategories(category._id)"
+           (mouseleave)="hideSubcategories()">
 
+        <!-- Click to navigate to category details -->
+        <a (click)="navigateToCategory(category.name)">{{ category.name }}</a>
+
+        <!-- Subcategories Dropdown -->
         <div class="subcategories" *ngIf="activeCategory === category._id">
-          <a *ngFor="let subcategory of category.subcategories">
+          <a *ngFor="let subcategory of category.subcategories"
+             (click)="navigateToSubcategory(category.name, subcategory.name)">
             {{ subcategory.name }}
           </a>
         </div>
-      </a>
-
+      </div>
     </div>
 
+    <!-- Social Media Links -->
     <div class="navbar-right">
-      <a class="icon-link"><i class="pi pi-facebook" style="font-size: 1rem"></i></a>
-      <a class="icon-link"><i class="pi pi-instagram" style="font-size: 1rem"></i></a>
+      <a class="icon-link"><i class="pi pi-facebook"></i></a>
+      <a class="icon-link"><i class="pi pi-instagram"></i></a>
     </div>
   </div>
 </nav>

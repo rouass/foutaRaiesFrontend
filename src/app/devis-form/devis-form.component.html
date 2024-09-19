@@ -1,55 +1,109 @@
-<form (ngSubmit)="submitDevis()" *ngIf="devisService.devisItems.length > 0" class="devis-form">
+<div *ngIf="loading" class="skeleton-container">
+  <!-- Skeleton loader for form fields -->
+  <div class="skeleton skeleton-title"></div>
+  <div class="skeleton skeleton-form-group"></div>
+  <div class="skeleton skeleton-form-group"></div>
+  <div class="skeleton skeleton-form-group"></div>
+  <div class="skeleton skeleton-form-group"></div>
+
+  <!-- Skeleton loader for fouta items -->
+  <div *ngFor="let item of [1, 2, 3]" class="skeleton-fouta-item">
+    <div class="skeleton skeleton-image"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-details"></div>
+  </div>
+
+</div>
+<form (ngSubmit)="submitDevis()" #devisForm="ngForm" *ngIf="!loading" class="devis-form">
+  <div style="text-align: center;">
+    <h2 style="text-align: center;">Demandez un devis</h2>
+    <img src="../../assets/icon-accmod.png" loading="lazy" style="margin-bottom: 2rem;">
+  </div>
+
   <div class="form-container">
     <div class="user-info">
-      <h2>Personal Information</h2>
-
+      <!-- Name -->
       <div class="form-group">
         <label for="name">Name:</label>
-        <input id="name" type="text" [(ngModel)]="name" name="name" required>
+        <input id="name" type="text" [(ngModel)]="name" name="name" required #nameField="ngModel">
+        <div *ngIf="nameField.invalid && nameField.touched" class="error-message">
+          Le nom est obligatoire.
+        </div>
       </div>
 
+      <!-- Prenom -->
       <div class="form-group">
         <label for="prenom">Prenom:</label>
-        <input id="prenom" type="text" [(ngModel)]="prenom" name="prenom" required>
+        <input id="prenom" type="text" [(ngModel)]="prenom" name="prenom" required #prenomField="ngModel">
+        <div *ngIf="prenomField.invalid && prenomField.touched" class="error-message">
+          Le prénom est obligatoire.
+        </div>
       </div>
 
+      <!-- Phone Number -->
       <div class="form-group">
         <label for="numtel">Phone Number:</label>
-        <input id="numtel" type="text" [(ngModel)]="numtel" name="numtel" required>
+        <input id="numtel" type="text" [(ngModel)]="numtel" name="numtel" required minlength="8" #numtelField="ngModel">
+        <div *ngIf="numtelField.invalid && numtelField.touched" class="error-message">
+          Numéro de téléphone invalide (minimum 8 caractères).
+        </div>
       </div>
 
+      <!-- Email -->
       <div class="form-group">
         <label for="email">Email:</label>
-        <input id="email" type="email" [(ngModel)]="email" name="email" required>
+        <input id="email" type="email" [(ngModel)]="email" name="email" required email #emailField="ngModel">
+        <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
+          Email invalide.
+        </div>
       </div>
 
+
+      <!-- Comments -->
       <div class="form-group">
         <label for="comments">Comments:</label>
         <textarea id="comments" [(ngModel)]="comments" name="comments"></textarea>
       </div>
     </div>
 
+    <!-- Validation pour les foutas -->
     <div class="fouta-selection-container">
-      <h2>Your Selected Foutas</h2>
+      <div *ngIf="devisService.devisItems.length === 0" class="no-products-message">
+        <p>Aucun produit n'a été ajouté. Veuillez sélectionner des produits avant de demander un devis.</p>
+      </div>
 
       <div class="fouta-list">
         <div class="fouta-item" *ngFor="let item of devisService.devisItems; let i = index">
-          <img [src]="item.image" alt="{{ item.name }}" class="fouta-image">
-          <div class="fouta-details">
-            <h3>{{ item.name }}</h3>
-            <p>{{ item.description }}</p>
+          <div class="fouta-image-row">
+            <img [src]="item.image" alt="{{ item.name }}" class="fouta-image">
+            <h3 class="fouta-title">{{ item.name }}</h3>
+          </div>
+
+          <div class="fouta-details-row">
+            <div class="form-group">
+              <label for="dimension{{i}}">Choose Dimension:</label>
+              <select id="dimension{{i}}" [(ngModel)]="item.selectedDimension" name="dimension{{i}}" required #dimensionField="ngModel">
+                <option *ngFor="let dimension of item.dimensions" [value]="dimension">{{ dimension }}</option>
+              </select>
+              <div *ngIf="dimensionField.invalid && dimensionField.touched" class="error-message">
+                Veuillez sélectionner une dimension.
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="quantity{{i}}">Quantity:</label>
-              <input id="quantity{{i}}" type="number" [(ngModel)]="item.quantity" name="quantity{{i}}" min="1" required>
+              <input id="quantity{{i}}" type="number" [(ngModel)]="item.quantity" name="quantity{{i}}" min="35"  value="35" required #quantityField="ngModel">
+              <div *ngIf="quantityField.invalid && quantityField.touched" class="error-message">
+                La quantité doit être supérieure ou égale à 35.
+              </div>
             </div>
-            <div class="form-group">
-              <label for="itemComments{{i}}">Comments:</label>
-              <textarea id="itemComments{{i}}" [(ngModel)]="item.comments" name="itemComments{{i}}"></textarea>
-            </div>
+
+            <i class="pi pi-trash" style="font-size: 1.5rem; color: tomato;" (click)="deleteFouta(i)"></i>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <button type="submit" class="btn-submit">Submit Devis</button>
+
+  <button type="submit" class="btn-submit" [disabled]="devisForm.invalid || devisService.devisItems.length === 0">Submit Devis</button>
 </form>

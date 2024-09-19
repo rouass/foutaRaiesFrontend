@@ -1,0 +1,43 @@
+<div class="add-submodel-container">
+  <h1>Add Submodel</h1>
+  <form (ngSubmit)="onSubmit()" #submodelForm="ngForm">
+    <div>
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="submodel.name"
+        required
+      />
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="submodel.description"
+      ></textarea>
+    </div>
+    <div>
+      <label for="image">Image URL:</label>
+      <input
+        type="text"
+        id="image"
+        name="image"
+        [(ngModel)]="submodel.image"
+      />
+    </div>
+    <div>
+      <label for="parentSubcategoryId">Parent Subcategory ID:</label>
+      <input
+        type="text"
+        id="parentSubcategoryId"
+        name="parentSubcategoryId"
+        [(ngModel)]="submodel.parentSubcategoryId"
+        required
+      />
+    </div>
+    <button type="submit" [disabled]="!submodelForm.form.valid">Add Submodel</button>
+  </form>
+</div>

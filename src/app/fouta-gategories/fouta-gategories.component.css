@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   height: 335px;
+  text-align: center; /* This covers the styling for both small screens and regular viewports */
 }
 
 .product-item-content,
@@ -18,9 +19,11 @@
 }
 
 .product-image {
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .p-carousel {
@@ -30,13 +33,26 @@
 
 .p-carousel .p-carousel-content {
   max-height: 250px;
+  padding: 10px;
 }
 
 .product-title {
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: #f0eded;
   margin-top: 10px;
+  transition: padding 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.product-title::after {
+  content: '';
+  display: block;
+  width: 80%;
+  height: 1px;
+  background-color: #fff;
+  margin: 5px auto 0;
 }
 
 .row {
@@ -64,14 +80,6 @@
   max-height: 150px;
 }
 
-.product-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
 .product-overlay {
   position: absolute;
   bottom: 0;
@@ -87,28 +95,6 @@
   background: rgba(65, 65, 65, 0.16);
 }
 
-.product-title {
-  color: #ebe0c7;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  width: 100%;
-  margin: 5px;
-  padding: 5px;
-  transition: padding 0.3s ease;
-}
-
-.product-title::after {
-  content: '';
-  display: block;
-  width: 30%;
-  height: 1px;
-  background-color: #fff;
-  margin: 5px auto 0;
-}
-
 .see-collection-btn {
   color: #fff;
   background-color: transparent;
@@ -122,31 +108,25 @@
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.product-card:hover .product-overlay {
+.product-card:hover .product-overlay,
+.product-item:hover .product-overlay {
   transform: translateY(-1px);
   opacity: 1;
 }
 
-.product-card:hover .product-title {
+.product-card:hover .product-title,
+.product-item:hover .product-title {
   padding: 5px;
 }
 
-.product-card:hover .see-collection-btn {
+.product-card:hover .see-collection-btn,
+.product-item:hover .see-collection-btn {
   opacity: 1;
 }
 
 @media (min-width: 576px) {
   .col-md-3 {
     flex: 0 0 33.33%;
-  }
-}
-
-@media (min-width: 768px) {
-  .col-md-3 {
-    flex: 0 0 33.33%;
-  }
-  .product-card {
-    height: 140px;
   }
 }
 
@@ -166,63 +146,66 @@
   .product-card {
     height: 200px;
   }
+
 }
 
-.productName {
-  position: absolute;
-  top: 65%;
-  margin-left: 26%;
-  color: #ebe0c7;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: transform 0.8s ease;
-  width: 41%;
-}
+@media (max-width: 640px) {
+  .product-item {
+    height: 300px;
+  }
 
-.product-item:hover .productName {
-  transform: translateY(-10px);
-}
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    width:400px;
+  }
 
-.product-item:hover .see-collection-btn {
-  opacity: 1;
-}
+  .productName {
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+  }
 
-.product-item:hover {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  background: rgba(206, 204, 204, 0.26);
-}
+  .btnn {
+    margin: 10px auto;
+    width: auto;
+  }
 
-.p-carousel-indicators {
-  display: none;
-}
+  .p-carousel .p-carousel-content {
+    max-height: 100%; /* Ensure full visibility of content */
+    padding: 5px;
+  }
 
-.p-carousel-prev,
-.p-carousel-next {
-  display: none;
-}
+  .p-carousel .product-item {
+    height: 250px; /* Adjust height for small screens */
+  }
 
-.btnn {
-  position: absolute;
-  top: 80%;
-  margin-left: -27%;
-  width: 50%;
+  .p-carousel .btnn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
 }
 
 .title-section {
   text-align: center;
-  margin-bottom: 20px;
-  margin-top: 2rem;
 }
 
 .title-section h2 {
   font-size: 20px;
-  color: #a08957;
+  color: #b99c6d;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.p-carousel .p-carousel-indicators {
-  visibility: hidden;
+.p-carousel-indicators,
+.p-carousel-prev,
+.p-carousel-next {
+  display: none;
+}
+@media (max-width: 540px) {
+  .product-image {
+    max-width: 100%;
+   height: 200px;
+  }
+
 }

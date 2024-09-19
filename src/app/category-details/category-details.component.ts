@@ -2,8 +2,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { SubcategoryService } from '../services/subcategory.service';
-import { SubmodelService } from '../services/submodel.service';
-import { FoutaService } from '../services/fouta.service';
 
 @Component({
   selector: 'app-category-details',
@@ -11,75 +9,80 @@ import { FoutaService } from '../services/fouta.service';
   styleUrls: ['./category-details.component.css']
 })
 export class CategoryDetailsComponent implements OnInit {
-  categoryName: string = '';
+  categoryName = '';
   categoryDetails: any;
   subcategories: any[] = [];
-  page = 1;
-  limit = 50;
   isLoading = false;
+  page = 1;
+  limit = 10;  // Start with a smaller batch
+  totalSubcategories = 0;
+  private scrollTimeout: any;
 
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private subcategoryService: SubcategoryService,
-    private submodelService: SubmodelService,
-    private router: Router,
-
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.categoryName = params.get('name')!;
+      this.categoryName = params.get('name') || '';
       this.fetchCategoryDetails(this.categoryName);
       this.getSubcategories();
     });
   }
 
   fetchCategoryDetails(name: string): void {
+
     this.categoryService.getCategoryByName(name).subscribe(
-      response => {
-        console.log(response);
-        this.categoryDetails = response;
-      },
-      error => {
-        console.error('Error fetching category details:', error);
-      }
+      response => this.categoryDetails = response,
+      error => console.error('Error fetching category details:', error)
     );
   }
 
   getSubcategories(): void {
-    this.subcategoryService.getSubcategoriesByCategoryName(this.categoryName)
-      .subscribe(
-        (data) => {
-          this.subcategories = data;
-        },
-        (error) => {
-          console.error('Error fetching subcategories:', error);
-        }
-      );
-  }
+    if (this.isLoading || (this.subcategories.length >= this.totalSubcategories && this.totalSubcategories !== 0)) {
+      return;
+    }
 
-  onSubcategoryClick(subcategoryName: string): void {
-    this.submodelService.getSubmodelsBySubcategoryName(subcategoryName)
-      .subscribe(
-        (submodels) => {
-          if (submodels.length > 0) {
-            this.router.navigate(['/submodels', subcategoryName]);
-          } else {
-            this.router.navigate(['/fouta', subcategoryName]);
-          }
-        },
-        (error) => {
-          console.error('Error fetching sub-models:', error);
-          this.router.navigate(['/fouta', subcategoryName]);
+    this.isLoading = true;
+    this.subcategoryService.getSubcategoriesByCategoryName(this.categoryName, this.page, this.limit).subscribe(
+      data => {
+        this.subcategories = [...this.subcategories, ...data.subcategories];
+        this.totalSubcategories = data.total;
+        this.isLoading = false;
+
+        if (this.subcategories.length < this.totalSubcategories) {
+          this.page++;
         }
-      );
+      },
+      error => {
+        console.error('Error fetching subcategories:', error);
+        this.isLoading = false;
+      }
+    );
+  }
+  onSubcategoryClick(subcategoryName: string): void {
+    this.router.navigate(['/products', this.categoryName, subcategoryName]);
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      this.getSubcategories();
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
     }
+
+    this.scrollTimeout = setTimeout(() => {
+      const nearBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100;
+
+      if (nearBottom) {
+        this.getSubcategories();
+      }
+    }, 300);  // Slightly increased debounce
+  }
+
+  trackBySubcategory(index: number, subcategory: any): string {
+    return subcategory._id;
   }
 }

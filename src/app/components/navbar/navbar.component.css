@@ -1,44 +1,49 @@
 .top-info {
   display: flex;
   justify-content: space-between;
-  padding: 5px 20px;
   background-color: #f8f8f8;
   font-size: 12px;
   color: #000;
   border-bottom: 1px solid #eaeaea;
+  height: 30px;
+  position: relative;
+  z-index: 999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.top-info.hidden {
+  opacity: 0; /* Fade out */
+  visibility: hidden; /* Hide completely */
+  height: 0; /* No height */
+  transition: opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease;
 }
 
-.email-address, .phone-number {
+.email-address {
   font-weight: bold;
+  order: 1; /* Email on the left */
 }
-
+.phone-number {
+  font-weight: bold;
+  order: 2; /* Phone on the right */
+}
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   font-family: Arial, sans-serif;
-  width: 100%;
   position: fixed;
+  top: 30px; /* Initially, below the top-info */
+  width: 100%;
   z-index: 1000;
-  background: #f8f8f3;
-  top: 0;
+  background-color: #f1efe7;
+  transition: top 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
+  height: 70px;
 
-.navbar-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 }
-
-.navbar-center img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 15px;
+.navbar.scrolled {
+  top: 0; /* Moves the navbar up to take the place of the top-info */
 }
-
 .menu-toggle {
   display: none;
   background: none;
@@ -47,29 +52,33 @@
   cursor: pointer;
   z-index: 1001;
 }
-
+.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.navbar-center img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1px;
+}
 .menu-items {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-
-.navbar-left, .navbar-right {
+.navbar-left,
+.navbar-right {
   display: flex;
   align-items: center;
 }
-
-.navbar-left a, .navbar-right a {
+.navbar-left a,
+.navbar-right a {
   margin: 0 10px;
   text-decoration: none;
   color: #000;
   font-size: 14px;
   text-transform: uppercase;
-  position: relative;
-}
-
-.navbar-left a.sale {
-  color: red;
 }
 
 .icon-link {
@@ -78,73 +87,104 @@
   color: #000;
   text-decoration: none;
 }
-.navbar-left a {
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+
+
+
+.category-wrapper {
+  position: relative;
 }
 
-.navbar-left a:hover {
-  background-color: #e0e0e0;
-  color: #333;
-}
 .subcategories {
+  display: flex;
+  flex-direction: column; /* Aligns subcategories in a column */
   position: absolute;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  padding: 10px 0;
+  min-width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px); /* Slight translation for smooth appearance */
+  transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, transform 0.1s ease-in-out;
   top: 100%;
-  left: 0;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: none;
-  z-index: 10;
-  min-width: 200px;
+  margin-top: 10px;
 }
+
+
+.category-wrapper:hover .subcategories {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
 
 .subcategories a {
   display: block;
-  padding: 10px 1rem;
+  padding: 12px 15px;
   text-decoration: none;
   color: #000;
+  font-size: 15px;
+  font-weight: 500;
   transition: background-color 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%; /* Ensures full-width clickable area */
 }
 
 .subcategories a:hover {
-  background-color: #ffffff;
-  color: #c9d4e0;
+  background-color: #edeff0;
+  color: #b99c6d;
 }
-.navbar-left a:hover .subcategories {
-  display: block;
+
+.subcategories a:last-child {
+  border-bottom: none; /* Remove last item's border */
 }
+
+.category-wrapper:hover .subcategories {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 868px) {
+  .subcategories {
+    position: relative;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    border-radius: 0; /* Remove rounded corners for mobile */
+    box-shadow: none; /* Remove shadow for mobile simplicity */
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 868px) {
   .navbar {
-    height: 4rem;
     justify-content: space-between;
   }
-
   .navbar-center {
     position: relative;
     transform: none;
     left: 5px;
-    order: 1;
   }
-
   .menu-toggle {
     display: block;
     order: 2;
   }
-
   .menu-items {
     position: fixed;
     top: 0;
     left: -250px;
     width: 250px;
     height: 100%;
+    background-color: white;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     transition: left 0.3s ease;
     padding-top: 60px;
     flex-direction: column;
     display: none;
-    background: #fffffff1;
   }
 
   .menu-items.active {
@@ -152,14 +192,16 @@
     left: 0;
   }
 
-  .navbar-left, .navbar-right {
+  .navbar-left,
+  .navbar-right {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 20px;
   }
 
-  .navbar-left a, .navbar-right a {
+  .navbar-left a,
+  .navbar-right a {
     margin: 10px 0;
   }
 }
@@ -169,11 +211,20 @@
     font-size: 10px;
   }
 
-  .navbar-left a, .navbar-right a {
+  .navbar-left a,
+  .navbar-right a {
     font-size: 12px;
   }
 
   .navbar-center img {
     width: 50%;
+
   }
+}
+/* src/styles.css */
+.navbar-left a,
+.subcategories a {
+  font-family: 'Merriweather', serif !important;
+  font-size: 15px; /* Adjust as needed */
+  color: #000;
 }

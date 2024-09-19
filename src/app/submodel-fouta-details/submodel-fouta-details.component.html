@@ -3,11 +3,8 @@
     Product added to devis! <button (click)="finalizeDevis()">Finalize Devis</button>
   </div>
 
-
-  <h1 class="shop-title">Submodels</h1>
-  <p class="shop-description">Explore the various submodels available in this subcategory.</p>
-
-  <div class="tabs">
+  <!-- Tabs -->
+  <div class="tabs" style="margin-top: 5rem;">
     <button
       class="tab-button"
       *ngFor="let fouta of uniqueFoutas"
@@ -18,72 +15,101 @@
     </button>
   </div>
 
-  <div class="product-grid">
-    <div
-      class="product-card"
-      *ngFor="let submodel of submodels"
-      (click)="viewSubmodelDetails(submodel._id)"
-    >
-      <img class="product-image" [src]="submodel.image" alt="{{ submodel.name }}" />
-      <h3 class="product-name">{{ submodel.name }}</h3>
-      <p class="product-description">{{ submodel.description }}</p>
-    </div>
-  </div>
+  <!-- Product Details Section with Skeleton Loader -->
+  <div class="product-page" *ngIf="!isLoading; else loadingTemplate">
+    <div class="c" *ngIf="selectedFouta">
+      <div class="image-gallery">
+        <div
+          class="thumbnail"
+          *ngFor="let image of selectedFoutaImages; let i = index"
+          (click)="selectImage(i)"
+          [class.selected]="i === selectedIndex"
+        >
+          <img [src]="image" alt="Thumbnail"  loading="lazy"  />
+        </div>
+      </div>
 
-  <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+      <div class="main-image">
+        <img [src]="selectedFoutaImages[selectedIndex]" alt="Main product image"  loading="lazy"  />
+      </div>
+    </div>
+
+    <div class="product-details">
+      <h1 class="product-title">{{ selectedFouta?.title }}</h1>
+
+      <button class="add-to-cart" (click)="addToDevis()">Ajouter au devis</button>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button (click)="toggleDescription()">DESCRIZIONE</button>
+          <div *ngIf="showDescription">{{ selectedFouta?.description }}</div>
+        </div>
+        <div class="accordion-item">
+          <button (click)="toggleMaterials()">MATERIALI</button>
+          <div *ngIf="showMaterials">Materials content...</div>
+        </div>
+        <div class="accordion-item">
+          <button (click)="toggleShipping()">SPEDIZIONE</button>
+          <div *ngIf="showShipping">Shipping content...</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <img  src="../../assets/icon-accmod.png" style="margin-top: 3rem;"  loading="lazy" >
+
+  <!-- Loading Skeleton Template -->
+  <ng-template #loadingTemplate>
+    <div class="product-page">
+      <div class="c">
+        <div style="display: flex; flex-direction: column; ">
+          <div class="skeleton skeleton-img "   ></div>
+          <div class="skeleton skeleton-img"   ></div>
+          <div class="skeleton skeleton-img"  ></div>
+        </div>
+        <div class="skeleton skeleton-image"></div>
+
+      </div>
+
+      <div class="product-details">
+        <div class="skeleton skeleton-title" style="margin-bottom: 1rem;"></div>
+        <div class="skeleton skeleton-button" style="margin-bottom: 1rem;"></div>
+        <div class="accordion">
+          <div class="accordion-item skeleton-accordion-item" style="margin-bottom: 1rem;">
+            <div class="skeleton skeleton-accordion-content"></div>
+          </div>
+          <div class="accordion-item skeleton-accordion-item">
+            <div class="skeleton skeleton-accordion-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>
 
-<!-- Fouta Details Section -->
-<div class="product-page" *ngIf="selectedFouta">
-  <div class="c">
-    <div class="image-gallery">
-      <div
-        class="thumbnail"
-        *ngFor="let image of selectedFoutaImages; let i = index"
-        (click)="selectImage(i)"
-        [class.selected]="i === selectedIndex"
-      >
-        <img [src]="image" alt="Thumbnail" />
-      </div>
-    </div>
+<!-- Similar Categories Section with Skeleton Loader -->
+<div class="similar-products">
+  <h2>Similar Subcategories</h2>
 
-    <div class="main-image">
-      <img [src]="selectedFoutaImages[selectedIndex]" alt="Main product image" />
+  <!-- Skeleton loader while fetching similar categories -->
+  <div class="product-grid" *ngIf="isLoadingSimilarCategories; else categoryContent">
+    <div class="skeleton-card" *ngFor="let _ of [1, 2, 3, 4, 5]">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text"></div>
+      <div class="skeleton-description"></div>
     </div>
   </div>
 
-  <div class="product-details">
-    <h1 class="product-title">{{ selectedFouta?.title }}</h1>
 
-    <button class="add-to-cart" (click)="addToDevis()">Ajouter au devis</button>
-    <div class="accordion">
-      <div class="accordion-item">
-        <button (click)="toggleDescription()">DESCRIZIONE</button>
-        <div *ngIf="showDescription">{{ selectedFouta?.description }}</div>
-      </div>
-      <div class="accordion-item">
-        <button (click)="toggleMaterials()">MATERIALI</button>
-        <div *ngIf="showMaterials">Materials content...</div>
-      </div>
-      <div class="accordion-item">
-        <button (click)="toggleShipping()">SPEDIZIONE</button>
-        <div *ngIf="showShipping">Shipping content...</div>
+  <!-- Actual content once loaded -->
+  <ng-template #categoryContent>
+    <div class="product-grid">
+      <div class="product-card"
+        *ngFor="let category of similarCategories"
+        (click)="viewCategory(category)">
+        <img class="product-image" [src]="category.image" alt="{{ category.name }}"  loading="lazy"  />
+        <h3 class="product-name">{{ category.name }}</h3>
+        <p class="product-description">{{ category.description }}</p>
       </div>
     </div>
-  </div>
-</div>
-<!-- Similar Foutas Section -->
-<div class="similar-products" *ngIf="similarFoutas.length > 0">
-  <h2>Similar Foutas</h2>
-  <div class="product-grid">
-    <div
-      class="product-card"
-      *ngFor="let fouta of similarFoutas"
-      (click)="selectFouta(fouta)"
-    >
-      <img class="product-image" [src]="fouta.images[0]" alt="{{ fouta.name }}" />
-      <h3 class="product-name">{{ fouta.name }}</h3>
-      <p class="product-description">{{ fouta.description }}</p>
-    </div>
-  </div>
+  </ng-template>
 </div>

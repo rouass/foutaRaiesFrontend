@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Fouta } from '../models/fouta.model';
 import { SubModel } from '../models/submodel.model';
+import { Subcategory } from '../models/subcategory.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,44 +14,35 @@ export class FoutaService {
 
   constructor(private http: HttpClient) { }
 
+  //submodelFoutaDetails
+  getSimilarSubcategoriesByCategory(categoryName: string, excludeFoutaId: string,  excludeSubmodelId?: string): Observable<Subcategory[]> {
+    let params = new HttpParams()
+      .set('excludeFoutaId', excludeFoutaId)
 
-  getFoutasBySubcategoryName(subcategoryName: string): Observable<Fouta[]> {
-    const encodedName = encodeURIComponent(subcategoryName);
-    return this.http.get<Fouta[]>(`${this.apiUrl}/name/${encodedName}`);
-  }
+    if (excludeSubmodelId) {
+      params = params.set('excludeSubmodelId', excludeSubmodelId);
+    }
 
-  getFoutaDetailsByName(name: string): Observable<Fouta> {
-    return this.http.get<Fouta>(`${this.apiUrl}/name/${name}`);
-  }
-  getFoutas(subcategoryName: string): Observable<Fouta[]> {
-    return this.http.get<Fouta[]>(`${this.apiUrl}/${subcategoryName}`);
-  }
-
-  getSubmodelsAndFoutaDetails(subcategoryName: string): Observable<{ fouta: Fouta; submodels: SubModel[] }> {
-    return this.http.get<{ fouta: Fouta; submodels: SubModel[] }>(
-      `${this.apiUrl}/submodels-and-fouta/${subcategoryName}`
-    );
+    return this.http.get<Subcategory[]>(`http://localhost:4401/api/foutas/category/${categoryName}`, { params });
   }
 
-  getFoutasByCategoryId(categoryId: string): Observable<Fouta[]> {
-    return this.http.get<Fouta[]>(`${this.apiUrl}/by-category-id/${categoryId}`);
-  }
-
-  getSimilarFoutasByCategory(category: string, excludeFoutaId: string, excludeSubcategoryId?: string, excludeSubmodelId?: string): Observable<Fouta[]> {
-  const encodedCategory = encodeURIComponent(category);
-  let params = `?excludeFoutaId=${encodeURIComponent(excludeFoutaId)}`;
-  if (excludeSubcategoryId) {
-    params += `&excludeSubcategoryId=${encodeURIComponent(excludeSubcategoryId)}`;
-  }
-  if (excludeSubmodelId) {
-    params += `&excludeSubmodelId=${encodeURIComponent(excludeSubmodelId)}`;
-  }
-  return this.http.get<Fouta[]>(`${this.apiUrl}/category/${encodedCategory}${params}`);
-}
+//devisForm
 
 getFoutasByIds(ids: string[]): Observable<Fouta[]> {
-  const idsString = ids.join(','); 
+  const idsString = ids.join(',');
   return this.http.get<Fouta[]>(`${this.apiUrl}/ids/${idsString}`);
 }
+
+addFouta(fouta: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/add`, fouta);
+}
+
+
+
+//submodelFouta
+getFoutasByCategoryAndSubcategoryName(categoryName: string, subcategoryName: string): Observable<{ foutas: Fouta[], submodels: SubModel[] }> {
+  return this.http.get<{ foutas: Fouta[], submodels: SubModel[] }>(`${this.apiUrl}/submodels-and-fouta/${categoryName}/${subcategoryName}`);
+}
+
 
 }

@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()">
+<br> <br> <br>  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="fouta.name" name="name" required>
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" [(ngModel)]="fouta.description" name="description"></textarea>
+  </div>
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" [(ngModel)]="fouta.title" name="title">
+  </div>
+  <div>
+    <label for="ref">Reference:</label>
+    <input type="text" id="ref" [(ngModel)]="fouta.ref" name="ref">
+  </div>
+  <div>
+    <label for="dimensions">Dimensions (comma-separated):</label>
+    <input type="text" id="dimensions" [(ngModel)]="fouta.dimensions" name="dimensions">
+  </div>
+  <div>
+    <label for="images">Images (comma-separated URLs):</label>
+    <input type="text" id="images" [(ngModel)]="fouta.images" name="images">
+  </div>
+  <div>
+    <label for="subcategoryId">Subcategory ID:</label>
+    <input type="text" id="subcategoryId" [(ngModel)]="fouta.subcategoryId" name="subcategoryId" required>
+  </div>
+  <button type="submit">Add Fouta</button>
+</form>

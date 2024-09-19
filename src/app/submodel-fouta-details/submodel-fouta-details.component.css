@@ -7,6 +7,7 @@
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 10px;
+  margin-top: 5rem;
 }
 
 .shop-description {
@@ -127,11 +128,11 @@
 }
 
 .main-image img {
-  width: 450px;
+  max-width: 100%;
+  max-height: 510px;
+  object-fit: contain;
   transition: opacity 0.3s ease-in-out;
   border-radius: 12px;
-  overflow: hidden;
-  max-width: 450px;
 }
 
 .product-details {
@@ -143,32 +144,8 @@
   font-weight: bold;
 }
 
-.price {
-  display: flex;
-  gap: 10px;
-}
 
-.old-price {
-  text-decoration: line-through;
-  color: grey;
-}
 
-.new-price {
-  color: red;
-  font-weight: bold;
-}
-
-.size-selector {
-  display: flex;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.size {
-  padding: 5px 10px;
-  border: 1px solid #000;
-  cursor: pointer;
-}
 
 .add-to-cart {
   background-color: grey;
@@ -213,10 +190,12 @@
     max-width: 100%;
   }
 
-  .thumbnail img {
-    width: 130px;
-  }
-
+.thumbnail img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
   .product-details {
     max-width: 100%;
     width: 500px;
@@ -325,8 +304,20 @@
   }
 
   .main-image {
-    width: 300px;
+    width: 350px;
     height: 350px;
+  }
+}
+@media (max-width:500px){
+  .image-gallery {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .thumbnail{
+    width: 100px;
+  }
+  .c{
+    flex-direction: column-reverse;
   }
 }
 
@@ -346,7 +337,7 @@
 }
 
 .similar-products .product-card {
-  width: calc(20% - 15px);
+  width: calc(20% - 15px); /* Default for 5 items per row */
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;
@@ -360,7 +351,8 @@
 
 .similar-products .product-image {
   width: 100%;
-  height: auto;
+  height: 250px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image fits within the fixed height */
 }
 
 .similar-products .product-name {
@@ -371,6 +363,41 @@
 .similar-products .product-description {
   color: #666;
   font-size: 14px;
+}
+
+/* Media Queries for Responsiveness */
+
+
+/* For screen widths between 992px and 1199px (4 items) */
+@media (max-width: 1209px) and (min-width: 492px) {
+  .similar-products .product-card {
+    width: calc(25% - 15px); /* 4 items per row */
+  }
+  .similar-products .product-image {
+    height: 150px;
+  }
+}
+
+/* For screen widths between 768px and 991px (3 items) */
+@media (max-width: 791px) and (min-width: 668px) {
+  .similar-products .product-card {
+    width: calc(33.33% - 15px); /* 3 items per row */
+  }
+
+}
+
+/* For screen widths between 576px and 767px (2 items) */
+@media (max-width: 667px) and (min-width: 476px) {
+  .similar-products .product-card {
+    width: calc(50% - 15px); /* 2 items per row */
+  }
+}
+
+/* For screen widths below 576px (1 item) */
+@media (max-width: 475px) {
+  .similar-products .product-card {
+    width: 100%; /* 1 item per row */
+  }
 }
 
 .popup {
@@ -387,3 +414,131 @@
   align-items: center;
   gap: 10px;
 }
+.skeleton {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.skeleton-title {
+  width: 200px;
+  height: 24px;
+  margin-bottom: 16px;
+}
+
+.skeleton-description {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 24px;
+}
+
+.skeleton-tab {
+  width: 120px;
+  height: 40px;
+  margin-right: 8px;
+}
+
+.skeleton-gallery {
+  width: 80px;
+  height: 80px;
+  margin-right: 12px;
+}
+
+.skeleton-main-image {
+  width: 500px;
+  height: 510px;
+}
+
+.skeleton-product-card {
+  width: 180px;
+  height: 250px;
+  margin: 12px;
+}
+
+.skeleton-button {
+  width: 120px;
+  height: 40px;
+}
+
+.skeleton-accordion {
+  width: 100%;
+  height: 24px;
+  margin-top: 12px;
+}
+
+
+/* Skeleton Loader Styles */
+.skeleton {
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skeleton-text {
+  width: 100%;
+  height: 20px;
+  margin: 10px 0;
+}
+
+.skeleton-image {
+  width: 350px;
+  height: 350px;
+  background: #e0e0e0;
+}
+
+.skeleton-button {
+  width: 150px;
+  height: 40px;
+  background: #e0e0e0;
+  margin: 10px 0;
+}
+.skeleton-img{
+  width: 110px;
+  height: 110px;
+  background: #e0e0e0;
+  margin-bottom: 1rem;
+}
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f5f5f5;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.skeleton {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+
+
+
+.skeleton-card {
+  width: 200px;
+  height: 250px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1.3rem;
+}
+
+
+
+

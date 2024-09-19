@@ -1,6 +1,6 @@
 export interface SelectedFouta {
   fouta: string;
-  color: string;
+  dimension: string;  // Add this field
   quantity: number;
   comments?: string;
 }

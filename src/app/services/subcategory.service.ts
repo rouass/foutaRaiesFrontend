@@ -1,16 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Subcategory } from '../models/subcategory.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubcategoryService {
-  private baseUrl = 'http://localhost:4401/api/subcategories'; 
+  private baseUrl = 'http://localhost:4401/api/subcategories';
 
   constructor(private http: HttpClient) { }
-
-  getSubcategoriesByCategoryName(categoryName: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/category-details/${categoryName}`);
+  //categoryDetails
+  getSubcategoriesByCategoryName(categoryName: string, page: number = 1, limit: number = 10): Observable<any> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get(`${this.baseUrl}/category-details/${categoryName}`, { params });
   }
+
+
+
+  addSubcategory(subcategory: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add`, subcategory);
+  }
+  // category.service.ts
+  getSubcategoryByCategoryAndSubcategoryName(categoryName: string, subcategoryName: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${categoryName}/${subcategoryName}`);
+  }
+
 }

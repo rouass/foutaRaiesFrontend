@@ -8,6 +8,7 @@ import { CategoryService } from './services/category.service';
 import { FormsModule } from '@angular/forms';
 import { DevisFormComponent } from './devis-form/devis-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CarouselComponent } from './carousel/carousel.component';
@@ -17,10 +18,11 @@ import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { CategoryDetailsComponent } from './category-details/category-details.component';
-import { FouataDetailsComponent } from './fouata-details/fouata-details.component';
-import { SubmodelListComponent } from './submodel-list/submodel-list.component';
 import { SubmodelFoutaDetailsComponent } from './submodel-fouta-details/submodel-fouta-details.component';
-
+import { AddSubcategoryComponent } from './admin/add-subcategory/add-subcategory.component';
+import { AddSubmodelComponent } from './admin/add-submodel/add-submodel.component';
+import { AddFoutaComponent } from './admin/add-fouta/add-fouta.component';
+import { FooterComponent } from './components/navbar/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,9 +32,11 @@ import { SubmodelFoutaDetailsComponent } from './submodel-fouta-details/submodel
     CarouselComponent,
     NavbarComponent,
     CategoryDetailsComponent,
-    FouataDetailsComponent,
-    SubmodelListComponent,
     SubmodelFoutaDetailsComponent,
+    AddSubcategoryComponent,
+    AddSubmodelComponent,
+    AddFoutaComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,9 +47,10 @@ import { SubmodelFoutaDetailsComponent } from './submodel-fouta-details/submodel
     ButtonModule,
     MenubarModule,
     CarouselModule,
-    TagModule
+    TagModule,
+    ProgressSpinnerModule
   ],
-  providers: [CategoryService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

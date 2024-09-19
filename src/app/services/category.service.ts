@@ -9,19 +9,22 @@ export class CategoryService {
   private baseUrl = 'http://localhost:4401/api/categories';
 
   constructor(private http: HttpClient) {}
-
+  //category details
   getCategoryByName(name: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${name}`);
   }
-
+  //fouta-gategories,
   getCategories(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
-
+  //navbar
   getCategoriesWithSubcategories(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/categwithSub`);
   }
-  getCategoryBySubcategoryName(subcategoryName: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/category-by-subcategory/${subcategoryName}`);
+  //submodelFoutaDetails
+  getCategoryById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/category-by-id/${id}`);
   }
+
+
 }
