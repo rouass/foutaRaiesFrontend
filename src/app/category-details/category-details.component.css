@@ -11,9 +11,12 @@
 }
 
 .shop-description {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 30px;
+  font-size: 16px;
+  color: #000000;
+  width: 64%;
+  margin: 2rem auto;
+  line-height: 20px;
+  text-align: justify;
 }
 
 .product-grid {

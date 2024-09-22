@@ -18,6 +18,7 @@
   <!-- Product Details Section with Skeleton Loader -->
   <div class="product-page" *ngIf="!isLoading; else loadingTemplate">
     <div class="c" *ngIf="selectedFouta">
+      <!-- Image Gallery -->
       <div class="image-gallery">
         <div
           class="thumbnail"
@@ -25,49 +26,49 @@
           (click)="selectImage(i)"
           [class.selected]="i === selectedIndex"
         >
-          <img [src]="image" alt="Thumbnail"  loading="lazy"  />
+          <img [src]="image" alt="Thumbnail" loading="lazy" />
         </div>
       </div>
 
+      <!-- Main Product Image -->
       <div class="main-image">
-        <img [src]="selectedFoutaImages[selectedIndex]" alt="Main product image"  loading="lazy"  />
+        <img [src]="selectedFoutaImages[selectedIndex]" alt="Main product image" loading="lazy" />
       </div>
     </div>
 
+    <!-- Product Details -->
     <div class="product-details">
       <h1 class="product-title">{{ selectedFouta?.title }}</h1>
+      <p class="product-description">{{ selectedFouta?.description }}</p>
+
+      <!-- Display Dimensions if available -->
+      <div *ngIf="selectedFouta && selectedFouta.dimensions && selectedFouta.dimensions.length > 0">
+        <h4>Dimensions:</h4>
+        <ul>
+          <li *ngFor="let dimension of selectedFouta.dimensions">
+            {{ dimension }}
+          </li>
+        </ul>
+      </div>
+
+
 
       <button class="add-to-cart" (click)="addToDevis()">Ajouter au devis</button>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button (click)="toggleDescription()">DESCRIZIONE</button>
-          <div *ngIf="showDescription">{{ selectedFouta?.description }}</div>
-        </div>
-        <div class="accordion-item">
-          <button (click)="toggleMaterials()">MATERIALI</button>
-          <div *ngIf="showMaterials">Materials content...</div>
-        </div>
-        <div class="accordion-item">
-          <button (click)="toggleShipping()">SPEDIZIONE</button>
-          <div *ngIf="showShipping">Shipping content...</div>
-        </div>
-      </div>
     </div>
-
   </div>
-  <img  src="../../assets/icon-accmod.png" style="margin-top: 3rem;"  loading="lazy" >
+
+  <img src="../../assets/icon-accmod.png" style="margin-top: 3rem;" loading="lazy" />
 
   <!-- Loading Skeleton Template -->
   <ng-template #loadingTemplate>
     <div class="product-page">
       <div class="c">
-        <div style="display: flex; flex-direction: column; ">
-          <div class="skeleton skeleton-img "   ></div>
-          <div class="skeleton skeleton-img"   ></div>
-          <div class="skeleton skeleton-img"  ></div>
+        <div style="display: flex; flex-direction: column;">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton skeleton-img"></div>
         </div>
         <div class="skeleton skeleton-image"></div>
-
       </div>
 
       <div class="product-details">
@@ -99,16 +100,15 @@
     </div>
   </div>
 
-
   <!-- Actual content once loaded -->
   <ng-template #categoryContent>
     <div class="product-grid">
       <div class="product-card"
-        *ngFor="let category of similarCategories"
-        (click)="viewCategory(category)">
-        <img class="product-image" [src]="category.image" alt="{{ category.name }}"  loading="lazy"  />
+           *ngFor="let category of similarCategories"
+           (click)="viewCategory(category)">
+        <img class="product-image" [src]="category.image" alt="{{ category.name }}" loading="lazy" />
         <h3 class="product-name">{{ category.name }}</h3>
-        <p class="product-description">{{ category.description }}</p>
+        <!-- <p class="product-description">{{ category.description }}</p> -->
       </div>
     </div>
   </ng-template>

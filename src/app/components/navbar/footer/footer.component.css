@@ -32,7 +32,7 @@
 
 .footer-section h3 {
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 23px;
   color: #dfdada; /* Ensure text color is visible */
 }
 
@@ -46,6 +46,8 @@
   margin: 5px 0;
   color: #e9e8e8; /* Text color to contrast with the dark overlay */
   cursor: pointer; /* Add pointer cursor */
+  font-size: 18px;
+
 }
 
 
@@ -61,7 +63,7 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .footer-section {
     width: 48%;
   }
@@ -83,7 +85,7 @@
 }
 
 /* Apply dropdown effect only for 320px width */
-@media (max-width: 600px) {
+@media (max-width: 620px) {
   /* Hide dropdown items by default */
   .footer-section ul,
   .footer-section .social-icons {
@@ -102,7 +104,6 @@
     padding: 10px 0;
   }
 
-  /* Add a small arrow indicator next to each heading */
   .footer-heading::after {
     content: '\25BC'; /* Downward arrow */
     position: absolute;

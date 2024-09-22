@@ -1,8 +1,8 @@
 <div class="shop-container">
-  <h1 class="shop-title" style="margin-top: 4rem;">{{ categoryDetails?.name }}</h1>
-  <img  src="../../assets/icon-accmod.png"  loading="lazy" >
 
+  <h1 class="shop-title" style="margin-top: 4rem;">{{ categoryDetails?.name }}</h1>
   <p class="shop-description">{{ categoryDetails?.description }}</p>
+  <img  src="../../assets/icon-accmod.png"  loading="lazy" style="margin-bottom: 2rem;" >
 
   <div class="product-grid">
     <!-- Skeleton loader for subcategories when loading -->
@@ -23,7 +23,7 @@
       >
         <img class="product-image" [src]="subcategory.image" loading="lazy" alt="{{ subcategory.name }}" />
         <h3 class="product-name">{{ subcategory.name }}</h3>
-        <p class="product-description">{{ subcategory.description }}</p>
+        <!-- <p class="product-description">{{ subcategory.description }}</p> -->
       </div>
     </ng-container>
   </div>

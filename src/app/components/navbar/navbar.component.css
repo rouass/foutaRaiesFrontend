@@ -146,7 +146,9 @@
   visibility: visible;
   transform: translateY(0);
 }
-
+a{
+  cursor: pointer;
+}
 @media (max-width: 868px) {
   .subcategories {
     position: relative;

@@ -192,14 +192,14 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
         text: 'Product added to devis!',
         title: `${this.selectedFouta.title}`,
         imageUrl: this.selectedFoutaImages[this.selectedIndex],
-        imageWidth: 200,
-        imageHeight: 200,
+        imageWidth: 150,
+        imageHeight: 150,
         imageAlt: 'Product image',
         toast: true,
         position: 'top-end',
         showConfirmButton: true,
         confirmButtonText: 'Finalize Devis',
-        timer: 2000,
+        timer: 5000,
       }).then((result) => {
         if (result.isConfirmed) {
           this.finalizeDevis(); // Call the finalizeDevis method to navigate
