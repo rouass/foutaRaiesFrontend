@@ -26,15 +26,26 @@ export class CategoryDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Subscribe to paramMap to detect route changes
     this.route.paramMap.subscribe(params => {
       this.categoryName = params.get('name') || '';
+
+      // Reset page-related data when the category changes
+      this.resetData();
+
+      // Fetch the category details and subcategories for the new category
       this.fetchCategoryDetails(this.categoryName);
       this.getSubcategories();
     });
   }
 
-  fetchCategoryDetails(name: string): void {
+  resetData(): void {
+    this.subcategories = [];
+    this.page = 1;
+    this.totalSubcategories = 0;
+  }
 
+  fetchCategoryDetails(name: string): void {
     this.categoryService.getCategoryByName(name).subscribe(
       response => this.categoryDetails = response,
       error => console.error('Error fetching category details:', error)
@@ -63,6 +74,7 @@ export class CategoryDetailsComponent implements OnInit {
       }
     );
   }
+
   onSubcategoryClick(subcategoryName: string): void {
     this.router.navigate(['/products', this.categoryName, subcategoryName]);
   }

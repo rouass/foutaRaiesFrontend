@@ -1,5 +1,5 @@
-// footer.component.ts
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Import the Router
 import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class FooterComponent implements OnInit {
 
   isDropdownOpen: string | null = null; // For managing dropdown visibility
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService, private router: Router) {} // Inject Router
 
   ngOnInit(): void {
     this.fetchCategories();
@@ -30,8 +30,27 @@ export class FooterComponent implements OnInit {
     );
   }
 
+  // Navigate to the category details page
+  navigateToCategory(name: string): void {
+    this.router.navigate(['/category-details', name]);
+  }
+
   // Toggles dropdown visibility for mobile view
   toggleDropdown(section: string): void {
     this.isDropdownOpen = this.isDropdownOpen === section ? null : section;
+  }
+
+  navigateHome() {
+    this.router.navigate(['/']); // Navigate to the home page
+  }
+  openEmail(): void {
+    window.location.href = 'mailto:fouta.raies@gmail.com';
+  }
+
+  openMap(): void {
+    window.open('https://maps.google.com/?q=Frères+RAIES+Fouta', '_blank');
+  }
+  callPhone(): void {
+    window.location.href = 'tel:+21699521058';
   }
 }

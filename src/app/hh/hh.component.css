@@ -1,0 +1,140 @@
+* {
+  font-family: Nunito, sans-serif;
+  box-sizing: border-box;
+}
+
+.responsive-container-block.bigContainer {
+  /* background-color: rgb(243, 243, 243); */
+  /* padding: 20px; */
+}
+
+.responsive-container-block.Container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+height: auto;
+}
+
+.responsive-container-block.leftSide {
+  width: 40%;
+  max-width: 480px;
+  /* padding: 10px; */
+}
+
+.text-blk.heading {
+  font-size: 28px;
+  line-height: 40px;
+  /* margin-bottom: 15px; */
+}
+
+.text-blk.subHeading {
+  font-size: 16px;
+  line-height: 28px;
+  text-align: justify;
+
+}
+
+.responsive-container-block.rightSide {
+  width: 40%;
+  max-width: 600px;
+  position: relative;
+  height: 450px;
+}
+
+.responsive-container-block.rightSide img {
+  position: absolute;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.number2img {
+  width: 35%;
+  height: 33%;
+  top: 3%;
+  left: 23%;
+}
+
+.number3img {
+  width: 43%;
+  height: 30%;
+  top: 41%;
+  left: 28%;
+}
+
+.number6img {
+  width: 36%;
+  height: 31%;
+  top: 0;
+  left: 62%;
+}
+
+.number5img {
+  width: 13%;
+  height: 88%;
+  top: 8%;
+  left: 60%;
+}
+
+.number7img {
+  width: 32%;
+  height: 49%;
+  top: 33%;
+  left: 73%;
+}
+.number1img {
+  width: 20%;
+  height: 30%;
+  top: 37%;
+  left: 0;
+  }
+@media (max-width:910px) {
+  .responsive-container-block.Container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .text-blk.heading
+ {
+      text-align: center;
+  }
+
+  .responsive-container-block.leftSide,
+  .responsive-container-block.rightSide {
+      width: 80%;
+  }
+
+  .responsive-container-block.rightSide {
+      height: auto;
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+
+  .responsive-container-block.rightSide img {
+      position: static;
+      width: 25%;
+      height: 30%;
+      margin: 5px;
+  }
+  img.number6img {
+    width: 520px;
+  }
+}
+
+@media (max-width: 600px) {
+  .responsive-container-block.rightSide img {
+    width: 45%;
+    height: 137px;
+    margin: 5px 1%;
+  }
+
+  .text-blk.heading {
+      font-size: 19px;
+      line-height: 10px;
+  }
+  .text-blk.heading .text-blk.subHeading {
+    font-size: 10px;
+}
+}

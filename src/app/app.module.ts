@@ -23,6 +23,9 @@ import { AddSubcategoryComponent } from './admin/add-subcategory/add-subcategory
 import { AddSubmodelComponent } from './admin/add-submodel/add-submodel.component';
 import { AddFoutaComponent } from './admin/add-fouta/add-fouta.component';
 import { FooterComponent } from './components/navbar/footer/footer.component';
+import { LoginComponent } from './authentification/login/login.component';
+import { ListDevisComponent } from './admin/list-devis/list-devis.component';
+import { HhComponent } from './hh/hh.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +40,9 @@ import { FooterComponent } from './components/navbar/footer/footer.component';
     AddSubmodelComponent,
     AddFoutaComponent,
     FooterComponent,
+    LoginComponent,
+    ListDevisComponent,
+    HhComponent,
   ],
   imports: [
     BrowserModule,

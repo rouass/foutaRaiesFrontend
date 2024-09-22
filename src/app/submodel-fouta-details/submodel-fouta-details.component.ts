@@ -8,6 +8,7 @@ import { SubModel } from '../models/submodel.model';
 import { Subcategory } from '../models/subcategory.model';
 import { debounceTime, forkJoin, Subscription } from 'rxjs';
 import { SubcategoryService } from '../services/subcategory.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-submodel-fouta-details',
@@ -181,20 +182,31 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       const foutaId = this.selectedFouta._id;
 
       const existingDevis = JSON.parse(localStorage.getItem('devis') || '[]');
-
       existingDevis.push(foutaId);
-
       localStorage.setItem('devis', JSON.stringify(existingDevis));
 
       console.log('Fouta ID added to devis:', foutaId);
 
-      this.showPopup = true;
+      // Display SweetAlert2 toast with the fouta image
+      Swal.fire({
+        text: 'Product added to devis!',
+        title: `${this.selectedFouta.title}`,
+        imageUrl: this.selectedFoutaImages[this.selectedIndex],
+        imageWidth: 200,
+        imageHeight: 200,
+        imageAlt: 'Product image',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: true,
+        confirmButtonText: 'Finalize Devis',
+        timer: 2000,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.finalizeDevis(); // Call the finalizeDevis method to navigate
+        }
+      });
+    }}
 
-      setTimeout(() => {
-        this.showPopup = false;
-      }, 3000);
-    }
-  }
 
   finalizeDevis(): void {
     this.router.navigate(['/finalize-devis']);

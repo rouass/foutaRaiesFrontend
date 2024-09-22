@@ -1,0 +1,16 @@
+<div class="login-form" style="margin-top: 7rem;">
+  <form (ngSubmit)="onLogin(form)" #form="ngForm">
+    <div>
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" name="phone" ngModel required placeholder="Phone Number">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" ngModel required placeholder="Password">
+    </div>
+    <button type="submit" [disabled]="form.invalid || isLoading">
+      Login
+    </button>
+    <div *ngIf="isLoading">Loading...</div>
+  </form>
+</div>

@@ -1,0 +1,47 @@
+<div *ngIf="devisList.length > 0; else noDevis">
+  <div *ngFor="let devis of devisList" class="devis-block">
+
+    <div class="devis-details">
+      <h3>User Details</h3>
+      <p>Name: {{ devis.name }} {{ devis.prenom }}</p>
+      <p>Email: {{ devis.email }}</p>
+      <p>Phone: {{ devis.numtel }}</p>
+      <p>Comments: {{ devis.comments }}</p>
+    </div>
+
+    <div class="fouta-details">
+      <h3>Selected Foutas</h3>
+      <table class="fouta-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Comments</th>
+            <th>Dimension</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fouta of devis.selectedFoutas">
+            <td>{{ fouta.fouta.name }}</td>
+            <td>{{ fouta.fouta.title }}</td>
+            <td>{{ fouta.quantity }}</td>
+            <td>{{ fouta.comments }}</td>
+            <td>{{ fouta.dimension }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Buttons after the table -->
+      <div class="button-group">
+        <button (click)="downloadPDF(devis._id)">Download PDF</button>
+        <button (click)="deleteDevis(devis._id)" class="delete-btn">Delete</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #noDevis>
+  <p>No devis found.</p>
+</ng-template>

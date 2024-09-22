@@ -17,13 +17,15 @@ export class DevisFormComponent implements OnInit {
   numtel: string | undefined;
   email: string | undefined;
   comments: string | undefined;
+  _id: string | undefined;
+
   foutas: Fouta[] = [];
   loading: boolean = true; // Track loading state
 
   constructor(
     public devisService: DevisService,
     private foutaService: FoutaService,
-    private router: Router 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +55,7 @@ export class DevisFormComponent implements OnInit {
 
   submitDevis() {
     // Validate user information fields
-    if (!this.name || !this.prenom || !this.numtel || !this.email) {
+    if (!this._id || !this.name || !this.prenom || !this.numtel || !this.email) {
       Swal.fire({
         icon: 'error',
         title: 'Champs obligatoires manquants',
@@ -84,6 +86,7 @@ export class DevisFormComponent implements OnInit {
 
     // If validation passes, submit the form
     const devisData: Devis = {
+      _id: this._id || '' ,
       name: this.name || '',
       prenom: this.prenom || '',
       numtel: this.numtel || '',

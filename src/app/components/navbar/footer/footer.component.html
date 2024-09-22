@@ -1,10 +1,26 @@
 <div class="footer">
-  <div class="footer-section">
-    <h3 class="footer-heading" (click)="toggleDropdown('collections')">BY FOUTAS' Collections</h3>
-    <ul [ngClass]="{'show': isDropdownOpen === 'collections'}">
-      <li *ngFor="let category of categories">{{ category.name }}</li>
-    </ul>
-  </div>
+
+
+
+    <div class="footer-section">
+      <h3 class="footer-heading" (click)="toggleDropdown('collections')"><img src="../../../../assets/logoFR.png" (click)="navigateHome()"></h3>
+      <!-- <ul [ngClass]="{'show': isDropdownOpen === 'collections'}">
+        <div class="social-icons" [ngClass]="{'show': isDropdownOpen === 'social'}">
+          <li class="pi pi-facebook" style="margin-right: 1.5rem ;"></li>
+          <li class="pi pi-instagram" href="#"></li>
+        </div>
+      </ul> -->
+    </div>
+
+    <div class="footer-section">
+      <h3 class="footer-heading" (click)="toggleDropdown('collections')">BY FOUTAS' Collections</h3>
+      <ul [ngClass]="{'show': isDropdownOpen === 'collections'}">
+        <li *ngFor="let category of categories" (click)="navigateToCategory(category.name)">
+          {{ category.name }}
+        </li>
+      </ul>
+    </div>
+
 
   <!-- Other sections remain unchanged -->
 
@@ -12,13 +28,21 @@
     <h3 class="footer-heading" (click)="toggleDropdown('help')">Contactez Nous</h3>
     <ul [ngClass]="{'show': isDropdownOpen === 'help'}">
 
-      <li class="pi  pi-envelope" href="#"> fouta.raies@gmail.com</li>
-      <li class="pi pi-phone">  +216 99 521 058 </li><br>
-      <li class="pi pi-map-marker">  Rue Principale Lamta 5099</li>
+      <li class="pi  pi-envelope"  (click)="openEmail()"> fouta.raies@gmail.com</li>
+      <li class="pi pi-phone" (click)="callPhone()" >  +216 99 521 058 </li><br>
+      <li class="pi pi-map-marker"  (click)="openMap()" >  Rue Principale Lamta 5099</li>
     </ul>
   </div>
 
   <div class="footer-section">
+    <h3 class="footer-heading" (click)="toggleDropdown('social')">Follow us</h3>
+    <div class="social-icons" [ngClass]="{'show': isDropdownOpen === 'social'}">
+      <a  class="pi pi-facebook" style="margin-right: 1.5rem ;"></a> <!-- Facebook icon -->
+      <a class="pi pi-instagram" href="#"></a> <!-- Instagram icon -->
+    </div>
+  </div>
+
+  <!-- <div class="footer-section">
     <h3 class="footer-heading" (click)="toggleDropdown('about')">Contactez Nous</h3>
     <ul [ngClass]="{'show': isDropdownOpen === 'about'}">
       <li>Customer Reviews</li>
@@ -29,14 +53,11 @@
       <li>Legal information</li>
       <li>Privacy</li>
     </ul>
-  </div>
+  </div> -->
 
 
-  <div class="footer-section">
+  <!-- <div class="footer-section">
     <h3 class="footer-heading" (click)="toggleDropdown('social')">Follow us</h3>
-    <div class="social-icons" [ngClass]="{'show': isDropdownOpen === 'social'}">
-      <a  class="pi pi-facebook" style="margin-right: 1.5rem ;"></a> <!-- Facebook icon -->
-      <a class="pi pi-instagram" href="#"></a> <!-- Instagram icon -->
-    </div>
-  </div>
+
+  </div> -->
 </div>
