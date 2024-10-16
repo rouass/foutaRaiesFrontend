@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./devis-form.component.css']
 })
 export class DevisFormComponent implements OnInit {
+  isSubmitting: boolean = false;
+
   name: string | undefined;
   prenom: string | undefined;
   numtel: string | undefined;
@@ -20,7 +22,7 @@ export class DevisFormComponent implements OnInit {
   _id: string | undefined;
 
   foutas: Fouta[] = [];
-  loading: boolean = true; // Track loading state
+  loading: boolean = true;
 
   constructor(
     public devisService: DevisService,
@@ -30,7 +32,6 @@ export class DevisFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadFoutasFromLocalStorage();
-    console.log('Loaded devis items:', this.devisService.devisItems);
     if (this.devisService.devisItems.length === 0) {
       console.warn('No items in devis!');
     }
@@ -38,10 +39,9 @@ export class DevisFormComponent implements OnInit {
 
   // Delete a fouta from the devis list
   deleteFouta(index: number): void {
-    this.devisService.devisItems.splice(index, 1); // Remove the item from the array
-    localStorage.setItem('devis', JSON.stringify(this.devisService.devisItems.map(item => item.foutaId))); // Update local storage
+    this.devisService.devisItems.splice(index, 1);
+    localStorage.setItem('devis', JSON.stringify(this.devisService.devisItems.map(item => item.foutaId)));
 
-    // Show success toast
     Swal.fire({
       icon: 'success',
       title: 'Produit supprimé!',
@@ -52,23 +52,44 @@ export class DevisFormComponent implements OnInit {
     });
   }
 
-
   submitDevis() {
-    // Validate user information fields
-    if (!this._id || !this.name || !this.prenom || !this.numtel || !this.email) {
+    // Vérification si aucun produit dans le devis
+    if (this.devisService.devisItems.length === 0) {
       Swal.fire({
-        icon: 'error',
-        title: 'Champs obligatoires manquants',
-        text: 'Veuillez remplir tous les champs requis (Nom, Prénom, Téléphone, Email).',
+        icon: 'warning',
+        title: 'Aucun produit dans le devis',
+        text: 'Veuillez ajouter des produits avant de soumettre le devis.',
         toast: true,
         position: 'top-end',
         timer: 3000,
         showConfirmButton: false,
       });
-      return; // Prevent submission if any required field is missing
+      return; // Arrêter l'exécution si aucun produit
     }
 
-    // Validate fouta-specific fields
+    // Validation des informations de l'utilisateur
+    let missingFields: string[] = [];
+
+    if (!this.name || this.name.trim() === '') missingFields.push('Nom');
+    if (!this.prenom || this.prenom.trim() === '') missingFields.push('Prénom');
+    if (!this.numtel || this.numtel.trim().length < 8) missingFields.push('Téléphone (min 8 caractères)');
+    if (!this.email || this.email.trim() === '') missingFields.push('Email');
+
+    // Si des champs sont manquants, afficher une alerte
+    if (missingFields.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Champs obligatoires manquants',
+        text: `Veuillez remplir les champs suivants : ${missingFields.join(', ')}`,
+        toast: true,
+        position: 'top-end',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      return; // Arrêter l'exécution s'il manque des informations utilisateur
+    }
+
+    // Validation des champs des produits (foutas)
     for (let item of this.devisService.devisItems) {
       if (!item.selectedDimension || !item.quantity || item.quantity < 35) {
         Swal.fire({
@@ -80,13 +101,20 @@ export class DevisFormComponent implements OnInit {
           timer: 3000,
           showConfirmButton: false,
         });
-        return; // Prevent submission if fouta details are missing or invalid
+        return; // Arrêter l'exécution s'il manque des informations produit
       }
     }
 
-    // If validation passes, submit the form
+    // Prévenir la soumission multiple
+    if (this.isSubmitting) {
+      return;
+    }
+
+    // Maintenant, on peut soumettre
+    this.isSubmitting = true;
+
     const devisData: Devis = {
-      _id: this._id || '' ,
+      _id: this._id || '',
       name: this.name || '',
       prenom: this.prenom || '',
       numtel: this.numtel || '',
@@ -95,19 +123,13 @@ export class DevisFormComponent implements OnInit {
       selectedFoutas: this.devisService.devisItems.map(item => ({
         fouta: item.foutaId,
         dimension: item.selectedDimension,
-        quantity: item.quantity || 1,
+        quantity: item.quantity || 35,
         comments: item.comments || '',
       }))
     };
 
-    console.log('Submitting Devis Data:', devisData);
-
     this.devisService.submitDevis(devisData).subscribe({
       next: (response) => {
-        // Reset form fields and clear devis items
-        this.resetForm();
-
-        // Show success toast
         Swal.fire({
           icon: 'success',
           title: 'Devis soumis avec succès!',
@@ -118,11 +140,20 @@ export class DevisFormComponent implements OnInit {
           showConfirmButton: false,
         });
 
-        // Redirect to home page
-        this.router.navigate(['/']); // Adjust the path to your home route
+        // Vider le localStorage et réinitialiser les données du formulaire
+        localStorage.removeItem('devis');
+        this.devisService.devisItems = [];
+        this.name = '';
+        this.prenom = '';
+        this.numtel = '';
+        this.email = '';
+        this.comments = '';
+
+        // Optionnel : navigation vers une autre page
+        this.router.navigate(['/']);
+        this.isSubmitting = false; // Débloquer le formulaire après soumission
       },
       error: (error) => {
-        console.error('Error submitting devis', error);
         Swal.fire({
           icon: 'error',
           title: 'Erreur de soumission',
@@ -132,23 +163,15 @@ export class DevisFormComponent implements OnInit {
           timer: 3000,
           showConfirmButton: false,
         });
+        this.isSubmitting = false; // Débloquer le formulaire en cas d'erreur
       }
     });
   }
 
-  // Reset form fields and state
-  private resetForm() {
-    this.name = undefined;
-    this.prenom = undefined;
-    this.numtel = undefined;
-    this.email = undefined;
-    this.comments = undefined;
-    this.devisService.devisItems = []; // Clear devis items
-    localStorage.removeItem('devis'); // Clear local storage
-    this.loading = true; // Optionally reset loading state
-    this.loadFoutasFromLocalStorage(); // Reload foutas if needed
-  }
 
+
+
+  // Load foutas from local storage
   loadFoutasFromLocalStorage(): void {
     const foutaIds = JSON.parse(localStorage.getItem('devis') || '[]');
 
@@ -177,4 +200,16 @@ export class DevisFormComponent implements OnInit {
       this.loading = false;
     }
   }
+
+  buildDevisPayload() {
+    return {
+      name: this.name,
+      prenom: this.prenom,
+      numtel: this.numtel,
+      email: this.email,
+      comments: this.comments,
+      devisItems: this.devisService.devisItems
+    };
+  }
+
 }

@@ -2,9 +2,9 @@
   <div class="popup" *ngIf="showPopup">
     Product added to devis! <button (click)="finalizeDevis()">Finalize Devis</button>
   </div>
-
+<div *ngIf="!isLoading; else loadingTemplate">
   <!-- Tabs -->
-  <div class="tabs" style="margin-top: 5rem;">
+  <div class="tabs" style="margin-top: 5rem;"   >
     <button
       class="tab-button"
       *ngFor="let fouta of uniqueFoutas"
@@ -16,7 +16,7 @@
   </div>
 
   <!-- Product Details Section with Skeleton Loader -->
-  <div class="product-page" *ngIf="!isLoading; else loadingTemplate">
+  <div class="product-page" >
     <div class="c" *ngIf="selectedFouta">
       <!-- Image Gallery -->
       <div class="image-gallery">
@@ -41,11 +41,10 @@
       <h1 class="product-title">{{ selectedFouta?.title }}</h1>
       <p class="product-description">{{ selectedFouta?.description }}</p>
 
-      <!-- Display Dimensions if available -->
-      <div *ngIf="selectedFouta && selectedFouta.dimensions && selectedFouta.dimensions.length > 0">
-        <h4>Dimensions:</h4>
+      <div *ngIf="selectedFouta && selectedFouta.dimensions && selectedFouta.dimensions.length > 0" >
+        <h4> dimensions disponibles:</h4>
         <ul>
-          <li *ngFor="let dimension of selectedFouta.dimensions">
+          <li *ngFor="let dimension of selectedFouta.dimensions" class="dimension-item" style="text-align: left;">
             {{ dimension }}
           </li>
         </ul>
@@ -53,15 +52,16 @@
 
 
 
+
       <button class="add-to-cart" (click)="addToDevis()">Ajouter au devis</button>
     </div>
   </div>
-
+</div>
   <img src="../../assets/icon-accmod.png" style="margin-top: 3rem;" loading="lazy" />
 
   <!-- Loading Skeleton Template -->
-  <ng-template #loadingTemplate>
-    <div class="product-page">
+  <ng-template #loadingTemplate >
+    <div class="product-page" style="margin-top: 8rem;">
       <div class="c">
         <div style="display: flex; flex-direction: column;">
           <div class="skeleton skeleton-img"></div>

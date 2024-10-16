@@ -21,11 +21,7 @@ title="frontend"
       src:
         "../../assets/3I3A2695.JPG"
     },
-    {
-      headline: "Focus On The Writing",
-      src:
-        "../../assets/3I3A2736.JPG"
-    },
+
     {
       headline: "Focus On The Writing",
       src:
@@ -41,16 +37,7 @@ title="frontend"
       src:
         "../../assets/3I3A2639.JPG"
     },
-    {
-      headline: "Miouw",
-      src:
-        "../assets/3I3A2732.JPG"
-    },
-    {
-      headline: "For Your Current Mood",
-      src:
-        "../assets/3I3A2666.JPG"
-    },
+  
 
     {
       headline: "In The Wilderness",
@@ -59,16 +46,7 @@ title="frontend"
     },
 
 
-    {
-      headline: "Focus On The Writing",
-      src:
-        "../../assets/3I3A2783.JPG"
-    },
-    {
-      headline: "Focus On The Writing",
-      src:
-        "../../assets/3I3A2661.JPG"
-    },
+
 
   ];
 

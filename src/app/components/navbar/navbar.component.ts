@@ -23,6 +23,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/']); // Navigate to the home page
   }
 
+  navigateTodevis(){
+    this.router.navigate(['/finalize-devis']); // Navigate to the home page
+
+  }
   ngOnInit(): void {
     this.fetchCategoriesWithSubcategories();
   }

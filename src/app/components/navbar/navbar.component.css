@@ -149,7 +149,9 @@
 a{
   cursor: pointer;
 }
-@media (max-width: 868px) {
+
+/* Responsive Design */
+@media (max-width: 668px) {
   .subcategories {
     position: relative;
     left: 0;
@@ -158,10 +160,6 @@ a{
     border-radius: 0; /* Remove rounded corners for mobile */
     box-shadow: none; /* Remove shadow for mobile simplicity */
   }
-}
-
-/* Responsive Design */
-@media (max-width: 868px) {
   .navbar {
     justify-content: space-between;
   }
@@ -229,4 +227,20 @@ a{
   font-family: 'Merriweather', serif !important;
   font-size: 15px; /* Adjust as needed */
   color: #000;
+}
+/* Style for the "Request a Quote" link */
+.request-quote {
+  background-color: #b99c6d; /* Use your brand color */
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-left: 15px; /* Space between the social icons */
+  transition: background-color 0.3s ease;
+}
+
+.request-quote:hover {
+  background-color: #a58858; /* Darker shade on hover */
 }

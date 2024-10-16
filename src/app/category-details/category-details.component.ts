@@ -34,7 +34,8 @@ export class CategoryDetailsComponent implements OnInit {
       this.resetData();
 
       // Fetch the category details and subcategories for the new category
-      this.fetchCategoryDetails(this.categoryName);
+      if(this.categoryName){
+      this.fetchCategoryDetails(this.categoryName);}
       this.getSubcategories();
     });
   }

@@ -182,14 +182,16 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       const foutaId = this.selectedFouta._id;
 
       const existingDevis = JSON.parse(localStorage.getItem('devis') || '[]');
-      existingDevis.push(foutaId);
-      localStorage.setItem('devis', JSON.stringify(existingDevis));
+      if (!existingDevis.includes(foutaId)) {
+          existingDevis.push(foutaId);
+          localStorage.setItem('devis', JSON.stringify(existingDevis));
+      }
 
       console.log('Fouta ID added to devis:', foutaId);
 
       // Display SweetAlert2 toast with the fouta image
       Swal.fire({
-        text: 'Product added to devis!',
+        text: 'Produit Ajouté!',
         title: `${this.selectedFouta.title}`,
         imageUrl: this.selectedFoutaImages[this.selectedIndex],
         imageWidth: 150,
@@ -198,7 +200,7 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
         toast: true,
         position: 'top-end',
         showConfirmButton: true,
-        confirmButtonText: 'Finalize Devis',
+        confirmButtonText: 'finaliser le devis',
         timer: 5000,
       }).then((result) => {
         if (result.isConfirmed) {

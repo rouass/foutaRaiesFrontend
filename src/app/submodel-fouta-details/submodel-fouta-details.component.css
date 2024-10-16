@@ -4,7 +4,7 @@
 }
 h4 {
   font-size: 21px;
-  color: #497f81;
+  color: #33595a;
 }
 .shop-title {
   font-size: 28px;
@@ -35,6 +35,39 @@ h4 {
   padding: 10px;
   transition: all 0.3s;
 }
+
+
+.dimensions-container h4 {
+  font-size: 22px;
+  color: #33595a;
+  margin-bottom: 10px;
+}
+
+.dimension-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  transition: box-shadow 0.3s;
+}
+
+.dimension-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dimension-icon {
+  margin-right: 8px;
+  font-size: 20px;
+  color: #497f81;
+}
+
+.dimension-item:last-child {
+  margin-bottom: 0;
+}
+
 
 .tab-button.active,
 .tab-button:hover {
@@ -140,12 +173,7 @@ h4 {
   max-width: 400px;
   text-align: left;
 }
-li{
-  list-style: none;
-  text-align: left;
-  font-size: 16px;
-  color: #272626;
-}
+
 .product-title {
   font-size: 35px;
   font-weight: bold;
@@ -311,7 +339,7 @@ li{
     height: 350px;
   }
 }
-@media (max-width:500px){
+@media (max-width:510px){
   .image-gallery {
     flex-direction: row;
     flex-wrap: wrap;
@@ -390,14 +418,14 @@ li{
 }
 
 /* For screen widths between 576px and 767px (2 items) */
-@media (max-width: 667px) and (min-width: 476px) {
+@media (max-width: 667px) and (min-width: 480px) {
   .similar-products .product-card {
     width: calc(50% - 15px); /* 2 items per row */
   }
 }
 
 /* For screen widths below 576px (1 item) */
-@media (max-width: 475px) {
+@media (max-width: 480px) {
   .similar-products .product-card {
     width: 100%; /* 1 item per row */
   }
@@ -529,10 +557,6 @@ li{
 .skeleton {
   animation: pulse 1.5s infinite ease-in-out;
 }
-
-
-
-
 .skeleton-card {
   width: 200px;
   height: 250px;
