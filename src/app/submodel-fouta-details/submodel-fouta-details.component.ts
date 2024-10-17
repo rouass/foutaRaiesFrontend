@@ -9,7 +9,6 @@ import { Subcategory } from '../models/subcategory.model';
 import { debounceTime, forkJoin, Subscription } from 'rxjs';
 import { SubcategoryService } from '../services/subcategory.service';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-submodel-fouta-details',
   templateUrl: './submodel-fouta-details.component.html',
@@ -27,13 +26,12 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
   showDescription = false;
   showMaterials = false;
   showShipping = false;
-  similarCategories: any[] = []; // Renamed from similarFoutas
+  similarCategories: any[] = [];
   categoryName: string | null = null;
   subcategoryName: string | null = null;
   showPopup = false;
   subcategory: Subcategory | null = null;
   isLoadingSimilarCategories = true;
-
   constructor(
     private foutaService: FoutaService,
     private subModelService: SubmodelService,
@@ -44,9 +42,7 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     this.route.paramMap.pipe(debounceTime(300)).subscribe(params => {
-      // Reset the state before loading new data
       this.resetComponentState();
-
       this.categoryName = params.get('categoryName');
       this.subcategoryName = params.get('subcategoryName');
 
@@ -54,36 +50,28 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
         this.fetchSubcategoryDetails(this.categoryName, this.subcategoryName);
         this.fetchSubmodelsAndFoutas(this.categoryName, this.subcategoryName);
         window.scrollTo(0, 0);  // Scroll to the top after navigation
-
       }
     });
   }
-
-  // Reset method to clear previous selections
   resetComponentState(): void {
     this.selectedFouta = null;
     this.selectedFoutaImages = [];
     this.selectedIndex = 0;
     this.isLoading = true;
   }
-
-
-
   fetchSubmodelsAndFoutas(categoryName: string, subcategoryName: string): void {
     this.isLoading = true;
 
     forkJoin({
-      // Now expecting the object { foutas, submodels } from the service
       result: this.foutaService.getFoutasByCategoryAndSubcategoryName(categoryName, subcategoryName)
     }).subscribe(({ result }) => {
-      // Properly accessing foutas and submodels from the result object
       this.foutas = result.foutas;
       this.submodels = result.submodels;
 
       this.uniqueFoutas = this.getUniqueFoutas(this.foutas);
 
       if (this.uniqueFoutas.length > 0) {
-        this.selectFouta(this.uniqueFoutas[0]);  // Select first fouta only if available
+        this.selectFouta(this.uniqueFoutas[0]);
       }
 
       this.fetchSimilarSubcategories(this.categoryName);
@@ -93,13 +81,8 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       console.error('Error fetching data:', error);
     });
   }
-
-
-
-
-
   fetchSimilarSubcategories(categoryName: string | null): void {
-    this.isLoadingSimilarCategories = true; // Start loading skeleton
+    this.isLoadingSimilarCategories = true;
     if (categoryName && this.selectedFouta) {
       const excludeSubcategoryId = this.selectedFouta.subcategoryId;
       let excludeSubmodelId: string | undefined;
@@ -136,8 +119,6 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       );
     }
   }
-
-
   getUniqueFoutas(foutas: Fouta[]): Fouta[] {
     return foutas.reduce((acc, current) => {
       if (!acc.find(fouta => fouta.name === current.name)) {
@@ -146,50 +127,38 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       return acc;
     }, [] as Fouta[]);
   }
-
   selectFouta(fouta: Fouta): void {
     this.selectedFouta = fouta;
     this.selectedFoutaImages = this.getImagesFromFouta(fouta);
     this.selectedIndex = 0;
   }
-
   getImagesFromFouta(fouta: Fouta): string[] {
     return fouta.images;
   }
-
   selectImage(index: number): void {
     this.selectedIndex = index;
   }
-
   toggleDescription(): void {
     this.showDescription = !this.showDescription;
   }
-
   toggleMaterials(): void {
     this.showMaterials = !this.showMaterials;
   }
-
   toggleShipping(): void {
     this.showShipping = !this.showShipping;
   }
-
   viewSubmodelDetails(submodelId: string): void {
     this.router.navigate([`/submodel/${submodelId}`]);
   }
-
   addToDevis(): void {
     if (this.selectedFouta) {
       const foutaId = this.selectedFouta._id;
-
       const existingDevis = JSON.parse(localStorage.getItem('devis') || '[]');
       if (!existingDevis.includes(foutaId)) {
           existingDevis.push(foutaId);
           localStorage.setItem('devis', JSON.stringify(existingDevis));
       }
-
       console.log('Fouta ID added to devis:', foutaId);
-
-      // Display SweetAlert2 toast with the fouta image
       Swal.fire({
         text: 'Produit Ajouté!',
         title: `${this.selectedFouta.title}`,
@@ -204,25 +173,19 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
         timer: 5000,
       }).then((result) => {
         if (result.isConfirmed) {
-          this.finalizeDevis(); // Call the finalizeDevis method to navigate
+          this.finalizeDevis();
         }
       });
     }}
-
-
   finalizeDevis(): void {
     this.router.navigate(['/finalize-devis']);
   }
   viewCategory(category: Subcategory): void {
     const parentCategoryId = category.parentCategoryId;
-
-    // Fetch the parent category by its ID
     this.categoryService.getCategoryById(parentCategoryId).subscribe(
       (parentCategory: any) => {
-        const parentCategoryName = (parentCategory.name);  // Use slugify if needed
-        const subcategoryName = (category.name);  // Use slugify if needed
-
-        // Navigate to the correct URL
+        const parentCategoryName = (parentCategory.name);
+        const subcategoryName = (category.name);
         this.router.navigate([`/products/${parentCategoryName}/${subcategoryName}`]);
       },
       (error: any) => {
@@ -230,18 +193,14 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-
   ngOnDestroy(): void {
     if (this.routeSub) {
-      this.routeSub.unsubscribe();  // Unsubscribe when the component is destroyed
+      this.routeSub.unsubscribe();
     }
   }
-
   fetchSubcategoryDetails(categoryName: string, subcategoryName: string): void {
     this.subCatgoryService.getSubcategoryByCategoryAndSubcategoryName(categoryName, subcategoryName).subscribe(
       (subcategory: Subcategory) => {
-        // Assign the fetched subcategory data to the component's subcategory property
         this.subcategory = subcategory;
         console.log('Subcategory Details:', this.subcategory);
       },
@@ -250,6 +209,4 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-
 }

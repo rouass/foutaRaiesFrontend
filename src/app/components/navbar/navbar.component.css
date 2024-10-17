@@ -16,7 +16,6 @@
   height: 0; /* No height */
   transition: opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease;
 }
-
 .email-address {
   font-weight: bold;
   order: 1; /* Email on the left */
@@ -39,7 +38,6 @@
   transition: top 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 70px;
-
 }
 .navbar.scrolled {
   top: 0; /* Moves the navbar up to take the place of the top-info */
@@ -80,23 +78,18 @@
   font-size: 14px;
   text-transform: uppercase;
 }
-
 .icon-link {
   font-size: 18px;
   margin: 0 10px;
   color: #000;
   text-decoration: none;
 }
-
-
-
 .category-wrapper {
   position: relative;
 }
-
 .subcategories {
   display: flex;
-  flex-direction: column; /* Aligns subcategories in a column */
+  flex-direction: column;
   position: absolute;
   background-color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -105,21 +98,16 @@
   min-width: 220px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px); /* Slight translation for smooth appearance */
+  transform: translateY(10px);
   transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out, transform 0.1s ease-in-out;
   top: 100%;
   margin-top: 10px;
 }
-
-
 .category-wrapper:hover .subcategories {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-
-
-
 .subcategories a {
   display: block;
   padding: 12px 15px;
@@ -131,16 +119,13 @@
   border-bottom: 1px solid #f0f0f0;
   width: 100%; /* Ensures full-width clickable area */
 }
-
 .subcategories a:hover {
   background-color: #edeff0;
   color: #b99c6d;
 }
-
 .subcategories a:last-child {
   border-bottom: none; /* Remove last item's border */
 }
-
 .category-wrapper:hover .subcategories {
   opacity: 1;
   visibility: visible;
@@ -149,8 +134,6 @@
 a{
   cursor: pointer;
 }
-
-/* Responsive Design */
 @media (max-width: 668px) {
   .subcategories {
     position: relative;
@@ -186,7 +169,6 @@ a{
     flex-direction: column;
     display: none;
   }
-
   .menu-items.active {
     display: flex;
     left: 0;
@@ -199,48 +181,34 @@ a{
     align-items: flex-start;
     padding-left: 20px;
   }
-
   .navbar-left a,
   .navbar-right a {
     margin: 10px 0;
   }
 }
-
 @media (max-width: 480px) {
   .top-info {
     font-size: 10px;
   }
-
   .navbar-left a,
   .navbar-right a {
     font-size: 12px;
   }
-
   .navbar-center img {
     width: 50%;
-
   }
 }
-/* src/styles.css */
-.navbar-left a,
-.subcategories a {
-  font-family: 'Merriweather', serif !important;
-  font-size: 15px; /* Adjust as needed */
-  color: #000;
-}
-/* Style for the "Request a Quote" link */
 .request-quote {
-  background-color: #b99c6d; /* Use your brand color */
+  background-color: #b99c6d;
   color: #fff;
   font-size: 14px;
   text-transform: uppercase;
   padding: 8px 15px;
   border-radius: 5px;
   text-decoration: none;
-  margin-left: 15px; /* Space between the social icons */
+  margin-left: 15px;
   transition: background-color 0.3s ease;
 }
-
 .request-quote:hover {
-  background-color: #a58858; /* Darker shade on hover */
+  background-color: #a58858;
 }

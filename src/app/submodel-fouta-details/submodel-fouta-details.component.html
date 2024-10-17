@@ -14,11 +14,8 @@
       {{ fouta.name }}
     </button>
   </div>
-
-  <!-- Product Details Section with Skeleton Loader -->
   <div class="product-page" >
     <div class="c" *ngIf="selectedFouta">
-      <!-- Image Gallery -->
       <div class="image-gallery">
         <div
           class="thumbnail"
@@ -29,18 +26,13 @@
           <img [src]="image" alt="Thumbnail" loading="lazy" />
         </div>
       </div>
-
-      <!-- Main Product Image -->
       <div class="main-image">
         <img [src]="selectedFoutaImages[selectedIndex]" alt="Main product image" loading="lazy" />
       </div>
     </div>
-
-    <!-- Product Details -->
     <div class="product-details">
       <h1 class="product-title">{{ selectedFouta?.title }}</h1>
       <p class="product-description">{{ selectedFouta?.description }}</p>
-
       <div *ngIf="selectedFouta && selectedFouta.dimensions && selectedFouta.dimensions.length > 0" >
         <h4> dimensions disponibles:</h4>
         <ul>
@@ -49,17 +41,11 @@
           </li>
         </ul>
       </div>
-
-
-
-
       <button class="add-to-cart" (click)="addToDevis()">Ajouter au devis</button>
     </div>
   </div>
 </div>
   <img src="../../assets/icon-accmod.png" style="margin-top: 3rem;" loading="lazy" />
-
-  <!-- Loading Skeleton Template -->
   <ng-template #loadingTemplate >
     <div class="product-page" style="margin-top: 8rem;">
       <div class="c">
@@ -70,7 +56,6 @@
         </div>
         <div class="skeleton skeleton-image"></div>
       </div>
-
       <div class="product-details">
         <div class="skeleton skeleton-title" style="margin-bottom: 1rem;"></div>
         <div class="skeleton skeleton-button" style="margin-bottom: 1rem;"></div>
@@ -86,12 +71,8 @@
     </div>
   </ng-template>
 </div>
-
-<!-- Similar Categories Section with Skeleton Loader -->
 <div class="similar-products">
   <h2>Similar Subcategories</h2>
-
-  <!-- Skeleton loader while fetching similar categories -->
   <div class="product-grid" *ngIf="isLoadingSimilarCategories; else categoryContent">
     <div class="skeleton-card" *ngFor="let _ of [1, 2, 3, 4, 5]">
       <div class="skeleton-image"></div>
@@ -99,8 +80,6 @@
       <div class="skeleton-description"></div>
     </div>
   </div>
-
-  <!-- Actual content once loaded -->
   <ng-template #categoryContent>
     <div class="product-grid">
       <div class="product-card"
@@ -108,7 +87,6 @@
            (click)="viewCategory(category)">
         <img class="product-image" [src]="category.image" alt="{{ category.name }}" loading="lazy" />
         <h3 class="product-name">{{ category.name }}</h3>
-        <!-- <p class="product-description">{{ category.description }}</p> -->
       </div>
     </div>
   </ng-template>

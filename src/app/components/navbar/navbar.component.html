@@ -2,7 +2,6 @@
   <span class="email-address">fouta.raies@gmail.com</span>
   <span class="phone-number">+216 99 521 058 / +216 52466593</span>
 </div>
-
 <nav class="navbar" [ngClass]="{'scrolled': isScrolled}">
   <div class="navbar-center">
     <a (click)="navigateHome()">
@@ -19,11 +18,7 @@
            class="category-wrapper"
            (mouseenter)="showSubcategories(category._id)"
            (mouseleave)="hideSubcategories()">
-
-        <!-- Click to navigate to category details -->
         <a (click)="navigateToCategory(category.name)">{{ category.name }}</a>
-
-        <!-- Subcategories Dropdown -->
         <div class="subcategories" *ngIf="activeCategory === category._id">
           <a *ngFor="let subcategory of category.subcategories"
              (click)="navigateToSubcategory(category.name, subcategory.name)">
@@ -32,14 +27,9 @@
         </div>
       </div>
     </div>
-
-    <!-- Social Media Links -->
     <div class="navbar-right">
-
-      <!-- <a class="icon-link"><i class="pi pi-facebook"></i></a>
-      <a class="icon-link"><i class="pi pi-instagram"></i></a> -->
       <a class="request-quote"  (click)="navigateTodevis()" target="_blank">
-        <i class="pi pi-envelope"></i>Demander un devis
+        <i class="pi pi-envelope"></i> Demander un devis
       </a>
     </div>
   </div>
