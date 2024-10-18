@@ -19,23 +19,23 @@ title="frontend"
     {
       headline: "Focus On The Writing",
       src:
-        "../../assets/3I3A2695.png"
+        "assets/3I3A2695.png"
     },
 
     {
       headline: "Focus On The Writing",
       src:
-        "../../assets/3I3A2768.png"
+        "assets/3I3A2768.png"
     },
     {
       headline: "Focus On The Writing",
       src:
-        "../../assets/3I3A2620.png",
+        "assets/3I3A2620.png",
     },
     {
       headline: "In The Wilderness",
       src:
-        "../../assets/3I3A2639.png"
+        "assets/3I3A2639.png"
     },
 
 
