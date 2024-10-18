@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FoutaGategoriesComponent } from './fouta-gategories/fouta-gategories.component';
-import { CategoryService } from './services/category.service';
 import { FormsModule } from '@angular/forms';
 import { DevisFormComponent } from './devis-form/devis-form.component';
 import { HomePageComponent } from './home-page/home-page.component';

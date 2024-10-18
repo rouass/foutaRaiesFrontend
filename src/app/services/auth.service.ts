@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private token: string | null = null;
@@ -30,7 +29,6 @@ export class AuthService {
         const token = response.token;
         this.token = token;
         if (token) {
-          const expiresInDuration = response.expiresIn;
           this.userRole = response.userRole;
 
           // Store token and role in local storage

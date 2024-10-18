@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-fouta-gategories',
   templateUrl: './fouta-gategories.component.html',
@@ -57,7 +56,7 @@ export class FoutaGategoriesComponent implements OnInit {
   }
 
   private checkScreenSize(): void {
-    this.isSmallScreen = window.innerWidth < 640; 
+    this.isSmallScreen = window.innerWidth < 640;
   }
 
   goToCategoryDetails(categoryName: string): void {

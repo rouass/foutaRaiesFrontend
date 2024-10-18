@@ -1,15 +1,9 @@
-import { style, animate, animation, keyframes } from "@angular/animations";
+import { style, animate, animation } from "@angular/animations";
 
-// =========================
-// Enum for referencing animations
-// =========================
 export enum AnimationType {
   Fade = "fade",
 }
 
-// =========================
-// Fade
-// =========================
 export const fadeIn = animation([
   style({ opacity: 0 }), // start state
   animate(

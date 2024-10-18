@@ -68,7 +68,7 @@ export class DevisFormComponent implements OnInit {
     }
 
     // Validation des informations de l'utilisateur
-    let missingFields: string[] = [];
+    const missingFields: string[] = [];
 
     if (!this.name || this.name.trim() === '') missingFields.push('Nom');
     if (!this.prenom || this.prenom.trim() === '') missingFields.push('Prénom');
