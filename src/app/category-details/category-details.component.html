@@ -2,7 +2,7 @@
 
   <h1 class="shop-title" style="margin-top: 4rem;">{{ categoryDetails?.name }}</h1>
   <p class="shop-description">{{ categoryDetails?.description }}</p>
-  <img  src="../../assets/icon-accmod.png"  loading="lazy" style="margin-bottom: 2rem;" >
+  <img  src="../../assets/icon-accmod.png"  loading="lazy" style="margin-bottom: 2rem;"   decoding="asynchronous"  rel="preload" >
 
   <div class="product-grid">
     <!-- Skeleton loader for subcategories when loading -->
@@ -21,7 +21,7 @@
         *ngFor="let subcategory of subcategories; trackBy: trackBySubcategory"
         (click)="onSubcategoryClick(subcategory.name)"
       >
-        <img class="product-image" [src]="subcategory.image" loading="lazy" alt="{{ subcategory.name }}" />
+        <img class="product-image" [src]="subcategory.image" loading="lazy" alt="{{ subcategory.name }}"   decoding="asynchronous"  rel="preload" />
         <h3 class="product-name">{{ subcategory.name }}</h3>
         <!-- <p class="product-description">{{ subcategory.description }}</p> -->
       </div>

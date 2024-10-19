@@ -5,6 +5,9 @@
       [src]="slide.src"
       class="slide"
       [@slideAnimation]="animationType"
+      decoding="asynchronous"
+      loading="lazy"
+      rel="preload"
     />
   </ng-container>
   <button class="control prev" (click)="onPreviousClick()">
