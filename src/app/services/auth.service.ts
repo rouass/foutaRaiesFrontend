@@ -24,7 +24,7 @@ export class AuthService {
 
   login(phone: string, password: string) {
     const loginData = { phone, password };
-    this.http.post<{ token: string, expiresIn: number, userRole: string }>('http://localhost:4401/api/users/login', loginData)
+    this.http.post<{ token: string, expiresIn: number, userRole: string }>('http://193.70.36.57:8001/api/users/login', loginData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;

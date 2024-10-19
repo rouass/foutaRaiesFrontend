@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SubcategoryService {
-  private baseUrl = 'http://localhost:4401/api/subcategories';
+  private baseUrl = 'http://193.70.36.57:8001/api/subcategories';
 
   constructor(private http: HttpClient) { }
   getSubcategoriesByCategoryName(categoryName: string, page: number = 1, limit: number = 10): Observable<any> {

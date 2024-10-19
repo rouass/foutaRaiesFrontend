@@ -49,7 +49,7 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
       if (this.categoryName && this.subcategoryName) {
         this.fetchSubcategoryDetails(this.categoryName, this.subcategoryName);
         this.fetchSubmodelsAndFoutas(this.categoryName, this.subcategoryName);
-        window.scrollTo(0, 0);  // Scroll to the top after navigation
+        window.scrollTo(0, 0);
       }
     });
   }
@@ -61,19 +61,15 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
   }
   fetchSubmodelsAndFoutas(categoryName: string, subcategoryName: string): void {
     this.isLoading = true;
-
     forkJoin({
       result: this.foutaService.getFoutasByCategoryAndSubcategoryName(categoryName, subcategoryName)
     }).subscribe(({ result }) => {
       this.foutas = result.foutas;
       this.submodels = result.submodels;
-
       this.uniqueFoutas = this.getUniqueFoutas(this.foutas);
-
       if (this.uniqueFoutas.length > 0) {
         this.selectFouta(this.uniqueFoutas[0]);
       }
-
       this.fetchSimilarSubcategories(this.categoryName);
       this.isLoading = false;
     }, error => {
@@ -86,12 +82,10 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
     if (categoryName && this.selectedFouta) {
       const excludeSubcategoryId = this.selectedFouta.subcategoryId;
       let excludeSubmodelId: string | undefined;
-
       this.subModelService.getSubmodelsBySubcategoryId(excludeSubcategoryId).subscribe(
         (submodels: SubModel[]) => {
           const submodel = submodels.find(sm => sm.parentSubcategoryId === excludeSubcategoryId);
           excludeSubmodelId = submodel ? submodel._id : undefined;
-
           const selectedFoutaId = this.selectedFouta?._id;
           if (selectedFoutaId) {
             this.foutaService.getSimilarSubcategoriesByCategory(categoryName, selectedFoutaId, excludeSubmodelId).subscribe(
@@ -103,17 +97,17 @@ export class SubmodelFoutaDetailsComponent implements OnInit, OnDestroy {
                   image: subcategory.image,
                   parentCategoryId: subcategory.parentCategoryId,
                 }));
-                this.isLoadingSimilarCategories = false; // Stop loading skeleton
+                this.isLoadingSimilarCategories = false;
               },
               (error: any) => {
-                this.isLoadingSimilarCategories = false; // Stop loading even on error
+                this.isLoadingSimilarCategories = false;
                 console.error('Error fetching similar subcategories:', error);
               }
             );
           }
         },
         (error: any) => {
-          this.isLoadingSimilarCategories = false; // Stop loading even on error
+          this.isLoadingSimilarCategories = false; 
           console.error('Error fetching submodels:', error);
         }
       );

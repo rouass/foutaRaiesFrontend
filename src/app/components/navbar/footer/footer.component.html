@@ -1,13 +1,6 @@
 <div class="footer">
-
     <div class="footer-section">
       <h3 class="footer-heading"><img src="../../../../assets/logoFR.png" (click)="navigateHome()"></h3>
-      <!-- <ul [ngClass]="{'show': isDropdownOpen === 'collections'}">
-        <div class="social-icons" [ngClass]="{'show': isDropdownOpen === 'social'}">
-          <li class="pi pi-facebook" style="margin-right: 1.5rem ;"></li>
-          <li class="pi pi-instagram" href="#"></li>
-        </div>
-      </ul> -->
     </div>
 
     <div class="footer-section">
@@ -18,44 +11,19 @@
         </li>
       </ul>
     </div>
-
-
-  <!-- Other sections remain unchanged -->
-
   <div class="footer-section">
     <h3 class="footer-heading" (click)="toggleDropdown('help')">Contactez Nous</h3>
     <ul [ngClass]="{'show': isDropdownOpen === 'help'}">
-
       <li class="pi  pi-envelope"  (click)="openEmail()"> fouta.raies@gmail.com</li><br>
       <li class="pi pi-phone" (click)="callPhone()" >  +216 99 521 058 </li><br>
       <li class="pi pi-map-marker"  (click)="openMap()" >  Rue Ostia Lamta-Monastir-Tunisie</li>
     </ul>
   </div>
-
   <div class="footer-section">
     <h3 class="footer-heading" (click)="toggleDropdown('social')">Suivez-Nous</h3>
     <div class="social-icons" [ngClass]="{'show': isDropdownOpen === 'social'}">
-      <a  class="pi pi-facebook" style="margin-right: 1.5rem ;"></a> <!-- Facebook icon -->
-      <a class="pi pi-instagram" href="#"></a> <!-- Instagram icon -->
+      <a  class="pi pi-facebook" style="margin-right: 1.5rem ;"></a>
+      <a class="pi pi-instagram" href="#"></a>
     </div>
   </div>
-
-  <!-- <div class="footer-section">
-    <h3 class="footer-heading" (click)="toggleDropdown('about')">Contactez Nous</h3>
-    <ul [ngClass]="{'show': isDropdownOpen === 'about'}">
-      <li>Customer Reviews</li>
-      <li>Blog</li>
-      <li>FAQ</li>
-      <li>Our History</li>
-      <li>GTC</li>
-      <li>Legal information</li>
-      <li>Privacy</li>
-    </ul>
-  </div> -->
-
-
-  <!-- <div class="footer-section">
-    <h3 class="footer-heading" (click)="toggleDropdown('social')">Follow us</h3>
-
-  </div> -->
 </div>

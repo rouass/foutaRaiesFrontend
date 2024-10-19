@@ -10,7 +10,7 @@ import { Subcategory } from '../models/subcategory.model';
 })
 export class FoutaService {
 
-  private apiUrl = 'http://localhost:4401/api/foutas';
+  private apiUrl = 'http://193.70.36.57:8001/api/foutas';
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +23,7 @@ export class FoutaService {
       params = params.set('excludeSubmodelId', excludeSubmodelId);
     }
 
-    return this.http.get<Subcategory[]>(`http://localhost:4401/api/foutas/category/${categoryName}`, { params });
+    return this.http.get<Subcategory[]>(`http://193.70.36.57:8001/api/foutas/category/${categoryName}`, { params });
   }
 
 //devisForm

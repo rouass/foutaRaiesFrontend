@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CategoryService {
-  private baseUrl = 'http://localhost:4401/api/categories';
+  private baseUrl = 'http://193.70.36.57:8001/api/categories';
 
   constructor(private http: HttpClient) {}
   //category details

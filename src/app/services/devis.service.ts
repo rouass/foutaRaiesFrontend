@@ -7,7 +7,7 @@ import { Devis } from '../models/devis.model';
   providedIn: 'root',
 })
 export class DevisService {
-  private apiUrl = 'http://localhost:4401/api/devis';
+  private apiUrl = 'http://193.70.36.57:8001/api/devis';
   devisItems: any[] = [];
 
   constructor(private http: HttpClient) {}

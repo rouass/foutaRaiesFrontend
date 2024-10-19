@@ -7,7 +7,7 @@ import { SubModel } from '../models/submodel.model';
   providedIn: 'root'
 })
 export class SubmodelService {
-  private apiUrl = 'http://localhost:4401/api/submodels';
+  private apiUrl = 'http://193.70.36.57:8001/api/submodels';
 
   constructor(private http: HttpClient) {}
 
@@ -15,15 +15,6 @@ export class SubmodelService {
   getSubmodelsBySubcategoryId(subcategoryId: string): Observable<SubModel[]> {
     return this.http.get<SubModel[]>(`${this.apiUrl}/id/${subcategoryId}`);
  }
-//  getSubmodelsBySubcategoryId(subcategoryId: string, excludeSubcategoryId?: string): Observable<SubModel[]> {
-//   let params = new HttpParams();
-//   if (excludeSubcategoryId) {
-//     params = params.set('excludeSubcategoryId', excludeSubcategoryId);
-//   }
-//   return this.http.get<SubModel[]>(`${this.apiUrl}/id/${subcategoryId}`, { params });
-// }
-
-
  addSubmodel(submodel: any): Observable<any> {
   return this.http.post(`${this.apiUrl}/add`, submodel);
 }

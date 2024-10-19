@@ -9,6 +9,7 @@
   position: relative;
   z-index: 999;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 10px;
 }
 .top-info.hidden {
   opacity: 0; /* Fade out */
